@@ -54,6 +54,10 @@ public class ChessBoard {
      * 保存还没下且电脑已经预测分数的 150个点
      */
     private Map<String, ChessPointMsg[][]> forecastMap = new HashMap<String, ChessPointMsg[][]>();
+    /**
+     * 保存已经下子的记录
+     */
+    private List<ChessPointMsg> recordMap = new ArrayList<ChessPointMsg>();
     
     
     public ChessBoard() { 
