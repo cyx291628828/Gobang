@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.cyx.gobang.five.constant.GobangConstant;
 import com.cyx.gobang.five.enums.ChessPlayer;
@@ -13,6 +14,7 @@ import com.cyx.gobang.five.enums.GameState;
 import com.cyx.gobang.five.structs.BestPoint;
 import com.cyx.gobang.five.structs.ChessPoint;
 import com.cyx.gobang.five.structs.ChessPointMsg;
+import com.cyx.gobang.five.structs.ForecastPointMsg;
 
 /**
  * 
@@ -41,7 +43,7 @@ public class ChessBoard {
     /**
      * 游戏状态  默认为游戏开始前
      */
-    private GameState gameState = GameState.START_BEGIN;
+    private AtomicInteger gameState = new AtomicInteger(GameState.START_BEGIN.getState());
     /**
      * 保存前十二个较好的落子点
      */
@@ -53,11 +55,28 @@ public class ChessBoard {
     /**
      * 保存还没下且电脑已经预测分数的 150个点
      */
-    private Map<String, ChessPointMsg[][]> forecastMap = new HashMap<String, ChessPointMsg[][]>();
+    private Map<String, ForecastPointMsg> forecastMap = new HashMap<String, ForecastPointMsg>();
     /**
      * 保存已经下子的记录
      */
     private List<ChessPointMsg> recordMap = new ArrayList<ChessPointMsg>();
+    
+    //get 和 set 方法
+    
+    public int getGameState() {
+        return gameState.get();
+    }
+    public void setGameState(int gameState) {
+        this.gameState.set(gameState);
+    }
+    //-------分界线-------
+    
+    public void doState(GameState state) {
+	int old_value = this.getGameState();
+
+	int new_value = GameState.clearGroupAndSet(old_value, state);
+	this.setGameState(new_value);
+    }
     
     
     public ChessBoard() { 
@@ -71,6 +90,10 @@ public class ChessBoard {
 		chessPointMsg[i][j] = new ChessPointMsg(new ChessPoint(i,j), ChessPlayer.BLANK);
 	    }
 	}
+	recordMap.clear();
+	forecastMap.clear();
+	forecastPoint.clear();
+	betterPoints.clear();
     }
     public static void main(String[] args) {
 	ChessBoard chessBoard = new ChessBoard();

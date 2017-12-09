@@ -55,6 +55,10 @@ public enum GameState {
         return state;
     }
 
+    public void setState(int state) {
+        this.state = state;
+    }
+
     public int getGroup() {
         return group;
     }
@@ -105,5 +109,8 @@ public enum GameState {
                 }
             }
         }
+    }
+    static {
+        initMarks();
     }
 }
