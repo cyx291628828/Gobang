@@ -13,7 +13,6 @@ import com.cyx.gobang.five.enums.GameState;
 import com.cyx.gobang.five.structs.BestPoint;
 import com.cyx.gobang.five.structs.ChessPoint;
 import com.cyx.gobang.five.structs.ChessPointMsg;
-import com.cyx.gobang.five.structs.ChessPointScore;
 
 /**
  * 
@@ -36,7 +35,7 @@ public class ChessBoard {
      */
     private ChessPlayer player = ChessPlayer.BLACK;
     /**
-     * 棋盘的坐标点信息
+     * 棋盘的所有坐标点信息
      */
     private ChessPointMsg[][] chessPointMsg = new ChessPointMsg[CHESS_SIZE][CHESS_SIZE];
     /**
