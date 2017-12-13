@@ -9,7 +9,7 @@ public enum GameState {
     /**
      * 游戏开始前
      */
-    START_BEGIN(0x0000,1),
+    START_BEFORE(0x0000,1),
     /**
      * 游戏开始
      */
