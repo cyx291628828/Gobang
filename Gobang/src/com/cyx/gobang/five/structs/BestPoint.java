@@ -55,5 +55,11 @@ public class BestPoint implements Comparable<BestPoint>{
 	    return 0;
 	}
     }
+    
+    @Override
+    public String toString() {
+	System.out.println("tostring");
+        return super.toString();
+    }
 
 }

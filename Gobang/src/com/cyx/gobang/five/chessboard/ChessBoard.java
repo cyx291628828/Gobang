@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.cyx.gobang.five.constant.GobangConstant;
 import com.cyx.gobang.five.enums.ChessPlayer;
 import com.cyx.gobang.five.enums.GameState;
+import com.cyx.gobang.five.interfaces.IGame;
 import com.cyx.gobang.five.structs.BestPoint;
 import com.cyx.gobang.five.structs.ChessPoint;
 import com.cyx.gobang.five.structs.ChessPointMsg;
@@ -23,7 +24,7 @@ import com.cyx.gobang.five.structs.ForecastPointMsg;
  * @function 棋盘上的逻辑主要功能
  *
  */
-public class ChessBoard {
+public class ChessBoard extends IGame {
     /**
      * 默认棋盘大小为GobangConstant.CHESS_SIZE = 15
      */
@@ -59,27 +60,33 @@ public class ChessBoard {
     /**
      * 保存已经下子的记录
      */
-    private List<ChessPointMsg> recordMap = new ArrayList<ChessPointMsg>();
+    private List<ChessPointMsg> recordList = new ArrayList<ChessPointMsg>();
 
     // 构造方法
     /**
-     * 初始化棋盘
-     * 棋盘大小15*15
+     * 初始化棋盘 棋盘大小15*15
      */
     public ChessBoard() {
 	init();
     }
+
     public ChessBoard(int chess_size) {
 	CHESS_SIZE = chess_size;
 	CHESS_GRID = chess_size - 1;
 	init();
     }
-    
+
     // get 和 set 方法
     private int getGameState() {
 	return gameState.get();
     }
 
+    /**
+     * 请使用upState(GameState) 方法
+     * 
+     * @param gameState
+     */
+    @Deprecated
     private void setGameState(int gameState) {
 	this.gameState.set(gameState);
     }
@@ -124,16 +131,16 @@ public class ChessBoard {
 	this.forecastMap = forecastMap;
     }
 
-    public List<ChessPointMsg> getRecordMap() {
-	return recordMap;
+    public List<ChessPointMsg> getRecordList() {
+	return recordList;
     }
 
-    public void setRecordMap(List<ChessPointMsg> recordMap) {
-	this.recordMap = recordMap;
+    public void setRecordList(List<ChessPointMsg> recordList) {
+	this.recordList = recordList;
     }
 
     // -------分界线-------
-    public void doState(GameState state) {
+    public void upState(GameState state) {
 	int old_value = this.getGameState();
 
 	int new_value = GameState.clearGroupAndSet(old_value, state);
@@ -141,8 +148,7 @@ public class ChessBoard {
     }
 
     /**
-     * 初始化棋盘信息
-     * 默认棋盘大小为15*15
+     * 初始化棋盘信息 默认棋盘大小为15*15
      */
     private void init() {
 	for (int i = 0; i < CHESS_SIZE; i++) {
@@ -150,7 +156,7 @@ public class ChessBoard {
 		chessPointMsg[i][j] = new ChessPointMsg(new ChessPoint(i, j), ChessPlayer.BLANK);
 	    }
 	}
-	recordMap.clear();
+	recordList.clear();
 	forecastMap.clear();
 	forecastPoint.clear();
 	betterPoints.clear();
