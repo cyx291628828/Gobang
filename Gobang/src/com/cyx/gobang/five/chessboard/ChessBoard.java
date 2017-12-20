@@ -38,17 +38,13 @@ public class ChessBoard extends IGame {
      */
     private ChessPlayer player = ChessPlayer.BLACK;
     /**
-     * 棋盘的所有坐标点信息
+     * 棋盘的所有坐标点信息和目前最好的十二个点
      */
-    private ChessPointMsg[][] chessPointMsg = new ChessPointMsg[CHESS_SIZE][CHESS_SIZE];
+    private ForecastPointMsg forecastPointMsg = new ForecastPointMsg();
     /**
      * 游戏状态 默认为游戏开始前
      */
     private AtomicInteger gameState = new AtomicInteger(GameState.START_BEFORE.getState());
-    /**
-     * 保存前十二个较好的落子点
-     */
-    private List<BestPoint> betterPoints = new ArrayList<BestPoint>();// 最好的十二个位置
     /**
      * 保存还没下且电脑已经预测分数的 150个点 队列里面只保存key，分数存在forecastMap中
      */
@@ -99,20 +95,12 @@ public class ChessBoard extends IGame {
 	this.player = player;
     }
 
-    public ChessPointMsg[][] getChessPointMsg() {
-	return chessPointMsg;
+    public ForecastPointMsg getForecastPointMsg() {
+	return forecastPointMsg;
     }
 
-    public void setChessPointMsg(ChessPointMsg[][] chessPointMsg) {
-	this.chessPointMsg = chessPointMsg;
-    }
-
-    public List<BestPoint> getBetterPoints() {
-	return betterPoints;
-    }
-
-    public void setBetterPoints(List<BestPoint> betterPoints) {
-	this.betterPoints = betterPoints;
+    public void setForecastPointMsg(ForecastPointMsg forecastPointMsg) {
+	this.forecastPointMsg = forecastPointMsg;
     }
 
     public Queue<String> getForecastPoint() {
@@ -151,23 +139,15 @@ public class ChessBoard extends IGame {
      * 初始化棋盘信息 默认棋盘大小为15*15
      */
     private void init() {
-	for (int i = 0; i < CHESS_SIZE; i++) {
-	    for (int j = 0; j < CHESS_SIZE; j++) {
-		chessPointMsg[i][j] = new ChessPointMsg(new ChessPoint(i, j), ChessPlayer.BLANK);
-	    }
-	}
+	forecastPointMsg.init(CHESS_SIZE, 12);
 	recordList.clear();
 	forecastMap.clear();
 	forecastPoint.clear();
-	betterPoints.clear();
 	setGameState(0);
     }
 
     public static void main(String[] args) {
 	ChessBoard chessBoard = new ChessBoard();
 	chessBoard.init();
-	ChessPointMsg chessPointMsg2 = chessBoard.chessPointMsg[5][5];
-	ChessPoint point = chessPointMsg2.getPoint();
-	System.out.println(point.getPoint_x());
     }
 }

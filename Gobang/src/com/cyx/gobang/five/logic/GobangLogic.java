@@ -1,5 +1,7 @@
 package com.cyx.gobang.five.logic;
 
+import java.util.Date;
+
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
@@ -8,6 +10,7 @@ import com.cyx.gobang.five.enums.ChessPlayer;
 import com.cyx.gobang.five.structs.BestPoint;
 import com.cyx.gobang.five.structs.ChessPoint;
 import com.cyx.gobang.five.structs.ChessPointMsg;
+import com.cyx.gobang.five.structs.ForecastPointMsg;
 
 public class GobangLogic {
     private static volatile GobangLogic gobangLogic;
@@ -32,13 +35,22 @@ public class GobangLogic {
      * 检验 落子 算分
      * @param cBoard
      * @param cPoint
+     * 落子点
+     * @param cPlayer
+     * 落子方
      * @return
      */
-    public boolean dropChess(ChessBoard cBoard, ChessPoint cPoint){
-	if(!checkChessIsDrop(cBoard, cPoint,ChessPlayer.BLANK)){
-	    
+    public boolean dropChess(ChessBoard cBoard, ChessPoint cPoint, ChessPlayer cPlayer){
+	if(!checkPointIsDrop(cBoard, cPoint,ChessPlayer.BLANK)){
+	    return false;
 	}
-	return false;
+	ForecastPointMsg forecastPointMsg = cBoard.getForecastPointMsg();
+	forecastPointMsg.addDropChess(cPoint, cPlayer);
+	//计算分数
+	return true;
+    }
+    public boolean dropChess(ChessBoard cBoard, ChessPoint cPoint, int cMark){
+	return dropChess(cBoard, cPoint, ChessPlayer.formMark(cMark));
     }
     /**
      * 第三个参数为null默认检验是否为空位置
@@ -46,21 +58,48 @@ public class GobangLogic {
      * @param cPoint
      * @return
      */
-    private boolean checkChessIsDrop(ChessBoard cBoard, ChessPoint cPoint) {
-	return checkChessIsDrop(cBoard, cPoint,ChessPlayer.BLANK);
+    public boolean checkPointIsDrop(ChessBoard cBoard, ChessPoint cPoint) {
+	return checkPointIsDrop(cBoard, cPoint,ChessPlayer.BLANK);
     }
-    private boolean checkChessIsDrop(ChessBoard cBoard, ChessPoint cPoint, ChessPlayer cPlayer) {
+    
+    /**
+     * 检测cPoint点上落子方是否是cPlayer中的一个
+     * @param cBoard
+     * @param cPoint
+     * @param cPlayer
+     * @return
+     */
+    public boolean checkPointIsDrop(ChessBoard cBoard, ChessPoint cPoint, ChessPlayer... cPlayer) {
 	if(cPlayer == null){
-	    cPlayer = ChessPlayer.BLANK;
+	    cPlayer[0] = ChessPlayer.BLANK;
 	}
-	ChessPointMsg[][] chessPointMsg = cBoard.getChessPointMsg();
+	if(!checkChessPointIndex(cBoard, cPoint)){
+	    return false;
+	}
+	ChessPointMsg[][] chessPointMsg = cBoard.getForecastPointMsg().getChessPointMsgs();
 	ChessPlayer player = chessPointMsg[cPoint.getPoint_x()][cPoint.getPoint_y()].getPlayer();
-	if(player.compare(cPlayer)){
-	    return true;
+	for(ChessPlayer cp : cPlayer){
+	    if(player.compare(cp)){
+		return true;
+	    }
 	}
 	return false;
     }
-    @Test
+    
+    public boolean checkChessPointIndex(ChessBoard cBoard, ChessPoint cPoint) {
+	if(cPoint.getPoint_x() < 0 || cPoint.getPoint_y() < 0){
+	    return false;
+	}
+	ChessPointMsg[][] chessPointMsg = cBoard.getForecastPointMsg().getChessPointMsgs();
+	if(cPoint.getPoint_x() >= chessPointMsg.length){
+	    return false;
+	}
+	if(cPoint.getPoint_y() >= chessPointMsg.length){
+	    return false;
+	}
+	return true;
+    }
+
     private String listToJson(ChessBoard cBoard){
 	String jsonString = JSON.toJSONString(cBoard.getRecordList());
 	cBoard.getRecordList();
@@ -70,9 +109,9 @@ public class GobangLogic {
     public static void main(String[] args) {
 	ChessBoard cbBoard = new ChessBoard();
 	BestPoint bPoint = new BestPoint();
-	cbBoard.getBetterPoints().add(bPoint);
+	cbBoard.getForecastPointMsg().getBetterPoints().add(bPoint);
 	bPoint.setPoint(new ChessPoint(2, 3));
-	String jsonString = JSON.toJSONString(cbBoard.getBetterPoints());
-	System.err.println(jsonString);
+	String jsonString = JSON.toJSONString(cbBoard.getForecastPointMsg().getBetterPoints());
+	System.err.println((new Date()).getTime());
     }
 }

@@ -27,7 +27,7 @@ public class ChessPointMsg {
      */
     private long timeMsec;
     /**
-     * @expression 落子方 时间
+     * @expression 落子方
      */
     private ChessPlayer player;
     /**
