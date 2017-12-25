@@ -2,6 +2,8 @@ package com.cyx.gobang.five.logic;
 
 import java.util.Date;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
@@ -13,6 +15,9 @@ import com.cyx.gobang.five.structs.ChessPointMsg;
 import com.cyx.gobang.five.structs.ForecastPointMsg;
 
 public class GobangLogic {
+    
+    private static Logger logger = LogManager.getLogger(GobangLogic.class.getName());
+    
     private static volatile GobangLogic gobangLogic;
     private static final Object S_OBJECT = new Object();
     
@@ -107,6 +112,7 @@ public class GobangLogic {
     }
     
     public static void main(String[] args) {
+	logger.error("¹þ¹þ");
 	ChessBoard cbBoard = new ChessBoard();
 	BestPoint bPoint = new BestPoint();
 	cbBoard.getForecastPointMsg().getBetterPoints().add(bPoint);
