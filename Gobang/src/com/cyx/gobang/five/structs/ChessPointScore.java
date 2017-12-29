@@ -59,5 +59,11 @@ public class ChessPointScore {
     public void setScoreAll(int scoreAll) {
         this.scoreAll = scoreAll;
     }
-    
+    public void clear(){
+	setHorizontalScore(0);
+	setScoreAll(0);
+	setVerticalScore(0);
+	setYouScore(0);
+	setZuoScore(0);
+    }
 }

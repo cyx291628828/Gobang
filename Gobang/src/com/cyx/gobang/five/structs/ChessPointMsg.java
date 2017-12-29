@@ -88,4 +88,8 @@ public class ChessPointMsg {
 	this.count = count;
     }
 
+    public void clearAllScore(){
+	blackScore.clear();
+	whiteScore.clear();
+    }
 }
