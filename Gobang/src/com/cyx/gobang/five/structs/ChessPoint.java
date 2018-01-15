@@ -1,4 +1,4 @@
-package com.cyx.gobang.five.structs;
+package src.com.cyx.gobang.five.structs;
 
 /**
  * 

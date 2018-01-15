@@ -1,4 +1,4 @@
-package com.cyx.gobang.five.logic;
+package src.com.cyx.gobang.five.logic;
 
 import java.util.Date;
 
@@ -6,12 +6,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
-import com.cyx.gobang.five.chessboard.ChessBoard;
-import com.cyx.gobang.five.enums.ChessPlayer;
-import com.cyx.gobang.five.structs.BestPoint;
-import com.cyx.gobang.five.structs.ChessPoint;
-import com.cyx.gobang.five.structs.ChessPointMsg;
-import com.cyx.gobang.five.structs.ForecastPointMsg;
+
+import src.com.cyx.gobang.five.chessboard.ChessBoard;
+import src.com.cyx.gobang.five.enums.ChessPlayer;
+import src.com.cyx.gobang.five.structs.BestPoint;
+import src.com.cyx.gobang.five.structs.ChessPoint;
+import src.com.cyx.gobang.five.structs.ChessPointMsg;
+import src.com.cyx.gobang.five.structs.ForecastPointMsg;
 
 public class GobangLogic {
 

@@ -1,4 +1,4 @@
-package com.cyx.gobang.five.chessboard;
+package src.com.cyx.gobang.five.chessboard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,14 +8,12 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.cyx.gobang.five.constant.GobangConstant;
-import com.cyx.gobang.five.enums.ChessPlayer;
-import com.cyx.gobang.five.enums.GameState;
-import com.cyx.gobang.five.interfaces.IGame;
-import com.cyx.gobang.five.structs.BestPoint;
-import com.cyx.gobang.five.structs.ChessPoint;
-import com.cyx.gobang.five.structs.ChessPointMsg;
-import com.cyx.gobang.five.structs.ForecastPointMsg;
+import src.com.cyx.gobang.five.constant.GobangConstant;
+import src.com.cyx.gobang.five.enums.ChessPlayer;
+import src.com.cyx.gobang.five.enums.GameState;
+import src.com.cyx.gobang.five.interfaces.IGame;
+import src.com.cyx.gobang.five.structs.ChessPointMsg;
+import src.com.cyx.gobang.five.structs.ForecastPointMsg;
 
 /**
  * 
