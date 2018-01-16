@@ -11,6 +11,7 @@ import com.cyx.gobang.five.enums.ChessPlayer;
 import com.cyx.gobang.five.structs.BestPoint;
 import com.cyx.gobang.five.structs.ChessPoint;
 import com.cyx.gobang.five.structs.ChessPointMsg;
+import com.cyx.gobang.five.structs.ChessPointScore;
 import com.cyx.gobang.five.structs.ForecastPointMsg;
 
 public class GobangLogic {
@@ -49,26 +50,48 @@ public class GobangLogic {
 	if (!checkPointIsDrop(cBoard, cPoint, ChessPlayer.BLANK)) {
 	    return false;
 	}
-	if(cBoard.getRecordList().size() == 0){
+	if (cBoard.getRecordList().size() == 0) {
 	    cBoard.setPlayer(cPlayer);
-	}else {
-	    if(cBoard.getPlayer().compare(cPlayer)){
+	} else {
+	    if (cBoard.getPlayer().compare(cPlayer)) {
 		logger.error("下子错误:当前下子方与前一方相同");
 		return false;
-	    }else {
+	    } else {
 		cBoard.setPlayer(cPlayer);
 	    }
 	}
 	ForecastPointMsg forecastPointMsg = cBoard.getForecastPointMsg();
 	forecastPointMsg.addDropChess(cPoint, cPlayer);
 	// 计算分数
-	calculateScore(forecastPointMsg.getChessPointMsgs());
+	calculateScore(cBoard, cPoint);
 	cBoard.getRecordList().add(forecastPointMsg.getDropChessMsg(cPoint));
 	return true;
     }
 
-    private void calculateScore(ChessPointMsg[][] chessPointMsgs) {
+    private void calculateScore(ChessBoard cBoard, ChessPoint cPoint) {
+	ChessPointScore blackScore ;
+	ChessPointScore whiteScore ;
+	ChessPoint temp = null;
+	for (int i = -4; i < 5; i++) {
+	    temp = createNewCPoint(cPoint, 0, i);//从左到右
+	    if (checkChessPointIndex(cBoard, temp) && checkPointIsDrop(cBoard, temp)) {
+		getHorizontalScore(cBoard, temp, ChessPlayer.BLACK);
+	    }
+	    temp = createNewCPoint(cPoint, i, 0);//从上到下
+	    
+	    temp = createNewCPoint(cPoint, i, i);//左上到右下
+	    
+	    temp = createNewCPoint(cPoint, i, -i);//右上到左下
+	}
+    }
+
+    private void getHorizontalScore(ChessBoard cBoard, ChessPoint temp, ChessPlayer black) {
+	// TODO Auto-generated method stubs
 	
+    }
+
+    private ChessPoint createNewCPoint(ChessPoint cPoint, int apart_x, int apart_y) {
+	return new ChessPoint(cPoint.getPoint_x() + apart_x, cPoint.getPoint_y() + apart_y);
     }
 
     public boolean dropChess(ChessBoard cBoard, ChessPoint cPoint, int cMark) {
