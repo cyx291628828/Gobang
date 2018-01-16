@@ -1,4 +1,4 @@
-package com.cyx.gobang.five.enums;
+package src.com.cyx.gobang.five.enums;
 
 import java.util.ArrayList;
 import java.util.HashMap;
