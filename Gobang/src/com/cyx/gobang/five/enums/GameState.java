@@ -1,4 +1,4 @@
-package src.com.cyx.gobang.five.enums;
+ï»¿package src.com.cyx.gobang.five.enums;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,31 +7,31 @@ import java.util.Map;
 
 public enum GameState {
     /**
-     * ÓÎÏ·¿ªÊ¼Ç°
+     * æ¸¸æˆå¼€å§‹å‰
      */
     START_BEFORE(0x0000,1),
     /**
-     * ÓÎÏ·¿ªÊ¼
+     * æ¸¸æˆå¼€å§‹
      */
     START(0x0001,1),
     /**
-     * ÓÎÏ·ÔİÍ£
+     * æ¸¸æˆæš‚åœ
      */
     PAUSE(0x0002,2),
     /**
-     * ÓÎÏ·´æÅÌ
+     * æ¸¸æˆå­˜ç›˜
      */
     SAVE(0x0004,3),
     /**
-     * ÓÎÏ·½áÊøÇ°
+     * æ¸¸æˆç»“æŸå‰
      */
     OVER_BEGIN(0x0008,1),
     /**
-     * ÓÎÏ·½áÊø
+     * æ¸¸æˆç»“æŸ
      */
     OVER(0x0010,1),
     /**
-     * ÓÎÏ·½áÊøºó
+     * æ¸¸æˆç»“æŸå
      */
     OVER_AFTER(0x0020,1),
     ;

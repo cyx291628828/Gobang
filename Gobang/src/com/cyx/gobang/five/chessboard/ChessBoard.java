@@ -1,4 +1,4 @@
-package com.cyx.gobang.five.chessboard;
+ï»¿package com.cyx.gobang.five.chessboard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,48 +17,48 @@ import com.cyx.gobang.five.structs.ForecastPointMsg;
 
 /**
  * 
- * @author ³ÂÓîĞù
- * @date 2017Äê11ÔÂ15
- * @function ÆåÅÌÉÏµÄÂß¼­Ö÷Òª¹¦ÄÜ
+ * @author é™ˆå®‡è½©
+ * @date 2017å¹´11æœˆ15
+ * @function æ£‹ç›˜ä¸Šçš„é€»è¾‘ä¸»è¦åŠŸèƒ½
  *
  */
 public class ChessBoard extends IGame {
     /**
-     * Ä¬ÈÏÆåÅÌ´óĞ¡ÎªGobangConstant.CHESS_SIZE = 15
+     * é»˜è®¤æ£‹ç›˜å¤§å°ä¸ºGobangConstant.CHESS_SIZE = 15
      */
     private int CHESS_SIZE = GobangConstant.CHESS_SIZE;
     /**
-     * Ä¬ÈÏÆåÅÌ¸ñ×ÓÊıÎªGobangConstant.CHESS_GRID = 14
+     * é»˜è®¤æ£‹ç›˜æ ¼å­æ•°ä¸ºGobangConstant.CHESS_GRID = 14
      */
     private int CHESS_GRID = GobangConstant.CHESS_GRID;
     /**
-     * µ±Ç°ÏÂ×ÓÍæ¼Ò£¬Ä¬ÈÏºÚÆåÏÈÊÖ
+     * å½“å‰ä¸‹å­ç©å®¶ï¼Œé»˜è®¤é»‘æ£‹å…ˆæ‰‹
      */
     private ChessPlayer player = ChessPlayer.BLACK;
     /**
-     * ÆåÅÌµÄËùÓĞ×ø±êµãĞÅÏ¢ºÍÄ¿Ç°×îºÃµÄÊ®¶ş¸öµã
+     * æ£‹ç›˜çš„æ‰€æœ‰åæ ‡ç‚¹ä¿¡æ¯å’Œç›®å‰æœ€å¥½çš„åäºŒä¸ªç‚¹
      */
     private ForecastPointMsg forecastPointMsg = new ForecastPointMsg();
     /**
-     * ÓÎÏ·×´Ì¬ Ä¬ÈÏÎªÓÎÏ·¿ªÊ¼Ç°
+     * æ¸¸æˆçŠ¶æ€ é»˜è®¤ä¸ºæ¸¸æˆå¼€å§‹å‰
      */
     private AtomicInteger gameState = new AtomicInteger(GameState.START_BEFORE.getState());
     /**
-     * ±£´æ»¹Ã»ÏÂÇÒµçÄÔÒÑ¾­Ô¤²â·ÖÊıµÄ 150¸öµã ¶ÓÁĞÀïÃæÖ»±£´ækey£¬·ÖÊı´æÔÚforecastMapÖĞ
+     * ä¿å­˜è¿˜æ²¡ä¸‹ä¸”ç”µè„‘å·²ç»é¢„æµ‹åˆ†æ•°çš„ 150ä¸ªç‚¹ é˜Ÿåˆ—é‡Œé¢åªä¿å­˜keyï¼Œåˆ†æ•°å­˜åœ¨forecastMapä¸­
      */
     private Queue<String> forecastPoint = new LinkedList<String>();
     /**
-     * ±£´æ»¹Ã»ÏÂÇÒµçÄÔÒÑ¾­Ô¤²â·ÖÊıµÄ 150¸öµã
+     * ä¿å­˜è¿˜æ²¡ä¸‹ä¸”ç”µè„‘å·²ç»é¢„æµ‹åˆ†æ•°çš„ 150ä¸ªç‚¹
      */
     private Map<String, ForecastPointMsg> forecastMap = new HashMap<String, ForecastPointMsg>();
     /**
-     * ±£´æÒÑ¾­ÏÂ×ÓµÄ¼ÇÂ¼
+     * ä¿å­˜å·²ç»ä¸‹å­çš„è®°å½•
      */
     private List<ChessPointMsg> recordList = new ArrayList<ChessPointMsg>();
 
-    // ¹¹Ôì·½·¨
+    // æ„é€ æ–¹æ³•
     /**
-     * ³õÊ¼»¯ÆåÅÌ ÆåÅÌ´óĞ¡15*15
+     * åˆå§‹åŒ–æ£‹ç›˜ æ£‹ç›˜å¤§å°15*15
      */
     public ChessBoard() {
 	init();
@@ -70,13 +70,13 @@ public class ChessBoard extends IGame {
 	init();
     }
 
-    // get ºÍ set ·½·¨
+    // get å’Œ set æ–¹æ³•
     private int getGameState() {
 	return gameState.get();
     }
 
     /**
-     * ÇëÊ¹ÓÃupState(GameState) ·½·¨
+     * è¯·ä½¿ç”¨upState(GameState) æ–¹æ³•
      * 
      * @param gameState
      */
@@ -125,7 +125,7 @@ public class ChessBoard extends IGame {
 	this.recordList = recordList;
     }
 
-    // -------·Ö½çÏß-------
+    // -------åˆ†ç•Œçº¿-------
     public void upState(GameState state) {
 	int old_value = this.getGameState();
 
@@ -134,7 +134,7 @@ public class ChessBoard extends IGame {
     }
 
     /**
-     * ³õÊ¼»¯ÆåÅÌĞÅÏ¢ Ä¬ÈÏÆåÅÌ´óĞ¡Îª15*15
+     * åˆå§‹åŒ–æ£‹ç›˜ä¿¡æ¯ é»˜è®¤æ£‹ç›˜å¤§å°ä¸º15*15
      */
     private void init() {
 	forecastPointMsg.init(CHESS_SIZE, 12);

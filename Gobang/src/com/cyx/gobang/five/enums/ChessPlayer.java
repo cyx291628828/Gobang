@@ -1,20 +1,21 @@
-package src.com.cyx.gobang.five.enums;
+ï»¿package src.com.cyx.gobang.five.enums;
 
 public enum ChessPlayer {
     /**
-     * @expression ¿Õ
+     * @expression ï¿½ï¿½
      */
-    BLANK(-1, "¿Õ×Ó"),
+    BLANK(-1, "ï¿½ï¿½ï¿½ï¿½"),
     /**
-     * @expression ºÚÆå
+     * @expression ï¿½ï¿½ï¿½ï¿½
      */
-    BLACK(1, "ºÚÆå"),
+    BLACK(1, "ï¿½ï¿½ï¿½ï¿½"),
     /**
-     * @expression °×Æå
+     * @expression ï¿½ï¿½ï¿½ï¿½
      */
-    WHITE(2, "°×Æå"),;
+    WHITE(2, "ï¿½ï¿½ï¿½ï¿½"),;
 
     private int mark;
+    
     private String des;
 
     private ChessPlayer(int mark, String des) {
