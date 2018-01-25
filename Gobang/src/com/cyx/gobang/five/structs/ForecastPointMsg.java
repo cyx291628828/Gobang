@@ -1,4 +1,4 @@
-package com.cyx.gobang.five.structs;
+ï»¿package com.cyx.gobang.five.structs;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,19 +9,19 @@ import com.cyx.gobang.five.enums.ChessPlayer;
 
 public class ForecastPointMsg {
     /**
-     * Ä¿Ç°Õû¸öÆåÅÌµÄËùÓĞµã×´Ì¬
+     * ç›®å‰æ•´ä¸ªæ£‹ç›˜çš„æ‰€æœ‰ç‚¹çŠ¶æ€
      */
     private ChessPointMsg[][] chessPointMsgs = new ChessPointMsg[GobangConstant.CHESS_SIZE][GobangConstant.CHESS_SIZE];
     /**
-     * Ä¿Ç°ÆåÅÌ×´Ì¬µÄ×îºÃµÄ12¸öµã
+     * ç›®å‰æ£‹ç›˜çŠ¶æ€çš„æœ€å¥½çš„12ä¸ªç‚¹
      */
     private List<BestPoint> betterPoints = new ArrayList<BestPoint>();
     /**
-     * ×îºÃµãµÄ¸öÊı
+     * æœ€å¥½ç‚¹çš„ä¸ªæ•°
      */
     private int pointSize = 12;
     /**
-     * ÏÂ×ÓµÄ²½Êı
+     * ä¸‹å­çš„æ­¥æ•°
      */
     private int chessCount = 0;
 

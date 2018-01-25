@@ -1,21 +1,21 @@
-package src.com.cyx.gobang.five.interfaces;
+ï»¿package com.cyx.gobang.five.interfaces;
 
-import src.com.cyx.gobang.five.chessboard.ChessBoard;
+import com.cyx.gobang.five.chessboard.ChessBoard;
 
 public interface OnGobangGameOver {
     
     /**
-     * ÔÚÓÎÏ·½áÊøµÄÊ±µ÷ÓÃ
-     * ÓÎÏ·³öÏÖÊ¤¸ºÖ®ºóµ÷ÓÃ
-     * Íæ¼ÒÊ¤Àû
+     * åœ¨æ¸¸æˆç»“æŸçš„æ—¶è°ƒç”¨
+     * æ¸¸æˆå‡ºç°èƒœè´Ÿä¹‹åè°ƒç”¨
+     * ç©å®¶èƒœåˆ©
      * @param cBoard
      */
     public void onGameWin(ChessBoard cBoard);
     
     /**
-     * ÔÚÓÎÏ·½áÊøµÄÊ±µ÷ÓÃ
-     * ÓÎÏ·³öÏÖÊ¤¸ºÖ®ºóµ÷ÓÃ
-     * Íæ¼ÒÊ§°Ü
+     * åœ¨æ¸¸æˆç»“æŸçš„æ—¶è°ƒç”¨
+     * æ¸¸æˆå‡ºç°èƒœè´Ÿä¹‹åè°ƒç”¨
+     * ç©å®¶å¤±è´¥
      * @param cBoard
      */
     public void onGameLose(ChessBoard cBoard);

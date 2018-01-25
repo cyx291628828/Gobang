@@ -1,31 +1,31 @@
-package src.com.cyx.gobang.five.structs;
+ï»¿package com.cyx.gobang.five.structs;
 
 /**
  * 
- * @author ³ÂÓîĞù
- * @date 2017Äê11ÔÂ14
- * @function ÆåÅÌÉÏÃ¿¸ö¿ÉÂä×ÓµãµÄ¸÷¸ö·½ÏòµÄ·ÖÊı
+ * @author é™ˆå®‡è½©
+ * @date 2017å¹´11æœˆ14
+ * @function æ£‹ç›˜ä¸Šæ¯ä¸ªå¯è½å­ç‚¹çš„å„ä¸ªæ–¹å‘çš„åˆ†æ•°
  *
  */
 public class ChessPointScore {
     /**
-     * @expression ×óÉÏµ½ÓÒÏÂµÄ³É¼¨
+     * @expression å·¦ä¸Šåˆ°å³ä¸‹çš„æˆç»©
      */
     private int zuoScore;
     /**
-     * @expression ÓÒÉÏµ½×óÏÂµÄ³É¼¨
+     * @expression å³ä¸Šåˆ°å·¦ä¸‹çš„æˆç»©
      */
     private int youScore;
     /**
-     * @expression ´¹Ö±·½ÏòÉÏµÄ³É¼¨
+     * @expression å‚ç›´æ–¹å‘ä¸Šçš„æˆç»©
      */
     private int verticalScore;
     /**
-     * @expression Ë®Æ½·½ÏòÉÏµÄ³É¼¨
+     * @expression æ°´å¹³æ–¹å‘ä¸Šçš„æˆç»©
      */
     private int horizontalScore;
     /**
-     * @expression ×Ü³É¼¨
+     * @expression æ€»æˆç»©
      */
     private int scoreAll;
     

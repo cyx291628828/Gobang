@@ -1,11 +1,11 @@
-package src.com.cyx.gobang.five.interfaces;
+锘縫ackage com.cyx.gobang.five.interfaces;
 
-import src.com.cyx.gobang.five.chessboard.ChessBoard;
+import com.cyx.gobang.five.chessboard.ChessBoard;
 
 public interface OnGobangGamePause {
 
     /**
-     * 在游戏暂停时调用
+     * 鍦ㄦ父鎴忔殏鍋滄椂璋冪敤
      * @param cBoard
      */
     public void onGamePause(ChessBoard cBoard);

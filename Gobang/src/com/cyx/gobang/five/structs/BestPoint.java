@@ -1,16 +1,16 @@
-package src.com.cyx.gobang.five.structs;
+ï»¿package com.cyx.gobang.five.structs;
 
 public class BestPoint implements Comparable<BestPoint>{
     /**
-     * @expression ¸ÃµãËùÔÚµÄXÖáYÖáµÄÎ»ÖÃ
+     * @expression è¯¥ç‚¹æ‰€åœ¨çš„Xè½´Yè½´çš„ä½ç½®
      */
     private ChessPoint point;
     /**
-     * @expression ¸ÃµãºÚÆåµÄ×Ü·ÖÊı
+     * @expression è¯¥ç‚¹é»‘æ£‹çš„æ€»åˆ†æ•°
      */
     private int blackScoreAll;
     /**
-     * @expression ¸Ãµã°×ÆåµÄ×Ü·ÖÊı
+     * @expression è¯¥ç‚¹ç™½æ£‹çš„æ€»åˆ†æ•°
      */
     private int whiteScoreAll;
 
@@ -43,7 +43,7 @@ public class BestPoint implements Comparable<BestPoint>{
     }
 
     /**
-     * ´ıÌí¼Ó
+     * å¾…æ·»åŠ 
      */
     @Override
     public int compareTo(BestPoint bestPoint) {

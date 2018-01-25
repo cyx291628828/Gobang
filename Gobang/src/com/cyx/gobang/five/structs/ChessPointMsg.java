@@ -1,37 +1,37 @@
-package src.com.cyx.gobang.five.structs;
+ï»¿package com.cyx.gobang.five.structs;
 
-import src.com.cyx.gobang.five.enums.ChessPlayer;
+import com.cyx.gobang.five.enums.ChessPlayer;
 
 /**
  * 
- * @author ³ÂÓîĞù
- * @date 2017Äê11ÔÂ14
- * @function ÆåÅÌÉÏÃ¿¸öÒÑÂä×ÓµãµÄĞÅÏ¢
+ * @author é™ˆå®‡è½©
+ * @date 2017å¹´11æœˆ14
+ * @function æ£‹ç›˜ä¸Šæ¯ä¸ªå·²è½å­ç‚¹çš„ä¿¡æ¯
  *
  */
 public class ChessPointMsg {
     /**
-     * @expression ¸ÃµãËùÔÚµÄXÖáYÖáµÄÎ»ÖÃ
+     * @expression è¯¥ç‚¹æ‰€åœ¨çš„Xè½´Yè½´çš„ä½ç½®
      */
     private ChessPoint point;
     /**
-     * @expression ¸ÃµãËùÔÚµÄBLACK·ÖÊı
+     * @expression è¯¥ç‚¹æ‰€åœ¨çš„BLACKåˆ†æ•°
      */
     private ChessPointScore blackScore = new ChessPointScore();
     /**
-     * @expression ¸ÃµãËùÔÚµÄWHITE·ÖÊı
+     * @expression è¯¥ç‚¹æ‰€åœ¨çš„WHITEåˆ†æ•°
      */
     private ChessPointScore whiteScore = new ChessPointScore();
     /**
-     * @expression Âä×ÓµÄºÁÃë Ê±¼ä
+     * @expression è½å­çš„æ¯«ç§’ æ—¶é—´
      */
     private long timeMsec;
     /**
-     * @expression Âä×Ó·½
+     * @expression è½å­æ–¹
      */
     private ChessPlayer player;
     /**
-     * @expression Âä×Ó²½Êı
+     * @expression è½å­æ­¥æ•°
      */
     private int count;
 

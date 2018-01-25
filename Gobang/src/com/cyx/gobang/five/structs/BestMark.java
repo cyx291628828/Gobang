@@ -1,24 +1,24 @@
-package src.com.cyx.gobang.five.structs;
+ï»¿package com.cyx.gobang.five.structs;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import src.com.cyx.gobang.five.enums.ChessPlayer;
+import com.cyx.gobang.five.enums.ChessPlayer;
 
 /**
- * ¶ÔÓÚµ±Ç°Íæ¼ÒÀ´Ëµ×îºÃµÄ¼¸¸öµã
- * @author ³ÂÓîĞù
+ * å¯¹äºå½“å‰ç©å®¶æ¥è¯´æœ€å¥½çš„å‡ ä¸ªç‚¹
+ * @author é™ˆå®‡è½©
  *
  */
 public class BestMark{
     /**
-     * µ±Ç°Íæ¼ÒÀ´Ëµ×îºÃµÄµã£¬Ä¬ÈÏºÚÆå¡£
+     * å½“å‰ç©å®¶æ¥è¯´æœ€å¥½çš„ç‚¹ï¼Œé»˜è®¤é»‘æ£‹ã€‚
      */
     private ChessPlayer player = ChessPlayer.BLACK;
     /**
-     * ±£´æÇ°Ê®¶ş¸ö½ÏºÃµÄÂä×Óµã
+     * ä¿å­˜å‰åäºŒä¸ªè¾ƒå¥½çš„è½å­ç‚¹
      */
-    private List<BestPoint> betterPoints = new ArrayList<BestPoint>();//×îºÃµÄÊ®¶ş¸öÎ»ÖÃ
+    private List<BestPoint> betterPoints = new ArrayList<BestPoint>();//æœ€å¥½çš„åäºŒä¸ªä½ç½®
     
 
 }

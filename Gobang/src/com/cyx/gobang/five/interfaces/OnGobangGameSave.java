@@ -1,11 +1,11 @@
-package src.com.cyx.gobang.five.interfaces;
+ï»¿package com.cyx.gobang.five.interfaces;
 
-import src.com.cyx.gobang.five.chessboard.ChessBoard;
+import com.cyx.gobang.five.chessboard.ChessBoard;
 
 public interface OnGobangGameSave {
     
     /**
-     * ÔÚÓÎÏ·´æÅÌµÄÊ±ºòµ÷ÓÃ
+     * åœ¨æ¸¸æˆå­˜ç›˜çš„æ—¶å€™è°ƒç”¨
      * @param cBoard
      */
     public void onGameSave(ChessBoard cBoard);

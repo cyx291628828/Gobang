@@ -1,6 +1,6 @@
-package src.com.cyx.gobang.five.interfaces;
+﻿package com.cyx.gobang.five.interfaces;
 
-import src.com.cyx.gobang.five.chessboard.ChessBoard;
+import com.cyx.gobang.five.chessboard.ChessBoard;
 
 public class IGame{
 

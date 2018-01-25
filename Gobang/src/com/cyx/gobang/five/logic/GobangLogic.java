@@ -1,4 +1,4 @@
-package com.cyx.gobang.five.logic;
+ï»¿package com.cyx.gobang.five.logic;
 
 import java.util.Date;
 
@@ -37,13 +37,13 @@ public class GobangLogic {
     }
 
     /**
-     * ¼ìÑé Âä×Ó Ëã·Ö
+     * æ£€éªŒ è½å­ ç®—åˆ†
      * 
      * @param cBoard
      * @param dropPoint
-     *            Âä×Óµã
+     *            è½å­ç‚¹
      * @param cPlayer
-     *            Âä×Ó·½
+     *            è½å­æ–¹
      * @return
      */
     public boolean dropChess(ChessBoard cBoard, ChessPoint dropPoint, ChessPlayer cPlayer) {
@@ -54,7 +54,7 @@ public class GobangLogic {
 	    cBoard.setPlayer(cPlayer);
 	} else {
 	    if (cBoard.getPlayer().compare(cPlayer)) {
-		logger.error("ÏÂ×Ó´íÎó:µ±Ç°ÏÂ×Ó·½ÓëÇ°Ò»·½ÏàÍ¬");
+		logger.error("ä¸‹å­é”™è¯¯:å½“å‰ä¸‹å­æ–¹ä¸å‰ä¸€æ–¹ç›¸åŒ");
 		return false;
 	    } else {
 		cBoard.setPlayer(cPlayer);
@@ -62,13 +62,13 @@ public class GobangLogic {
 	}
 	ForecastPointMsg forecastPointMsg = cBoard.getForecastPointMsg();
 	forecastPointMsg.addDropChess(dropPoint, cPlayer);
-	// ¼ÆËã·ÖÊı
+	// è®¡ç®—åˆ†æ•°
 	calculateScore(cBoard, dropPoint);
 	cBoard.getRecordList().add(forecastPointMsg.getDropChessMsg(dropPoint));
 	return true;
     }
     /**
-     * Âä×ÓµãdropPoint Âä×ÓÖ®ºóÆäÖÜÎ§µÄ×ÓµÄ·ÖÊı±ä¸ü
+     * è½å­ç‚¹dropPoint è½å­ä¹‹åå…¶å‘¨å›´çš„å­çš„åˆ†æ•°å˜æ›´
      * @param cBoard
      * @param dropPoint
      */
@@ -77,20 +77,20 @@ public class GobangLogic {
 	ChessPointScore whiteScore ;
 	ChessPoint check = null;
 	for (int i = -4; i < 5; i++) {
-	    check = createNewCPoint(dropPoint, 0, i);//´Ó×óµ½ÓÒ
+	    check = createNewCPoint(dropPoint, 0, i);//ä»å·¦åˆ°å³
 	    if (checkChessPointIndex(cBoard, check) && checkPointIsDrop(cBoard, check)) {
 		getHorizontalScore(cBoard, check, dropPoint, ChessPlayer.BLACK);
 	    }
-	    check = createNewCPoint(dropPoint, i, 0);//´ÓÉÏµ½ÏÂ
+	    check = createNewCPoint(dropPoint, i, 0);//ä»ä¸Šåˆ°ä¸‹
 	    
-	    check = createNewCPoint(dropPoint, i, i);//×óÉÏµ½ÓÒÏÂ
+	    check = createNewCPoint(dropPoint, i, i);//å·¦ä¸Šåˆ°å³ä¸‹
 	    
-	    check = createNewCPoint(dropPoint, i, -i);//ÓÒÉÏµ½×óÏÂ
+	    check = createNewCPoint(dropPoint, i, -i);//å³ä¸Šåˆ°å·¦ä¸‹
 	}
     }
 
     private void getHorizontalScore(ChessBoard cBoard, ChessPoint check, ChessPoint cPoint, ChessPlayer cPlayer) {
-	//¼ì²â check Óë cPoint µãÖ®¼ä£¨²»¿¼ÂÇ´Ëcheck¡¢cPointÁ½µã£©ÓĞÎŞ³ıÁË¿ÕºÍcPlayerµÄÆäËû×Ó£¬ÓĞ²»¼ÆËã£¬Ã»ÓĞ¾Í¼ÆËã
+	//æ£€æµ‹ check ä¸ cPoint ç‚¹ä¹‹é—´ï¼ˆä¸è€ƒè™‘æ­¤checkã€cPointä¸¤ç‚¹ï¼‰æœ‰æ— é™¤äº†ç©ºå’ŒcPlayerçš„å…¶ä»–å­ï¼Œæœ‰ä¸è®¡ç®—ï¼Œæ²¡æœ‰å°±è®¡ç®—
 	checkBetweenTwoPoints(cBoard, check, cPoint);
 	
     }
@@ -108,7 +108,7 @@ public class GobangLogic {
     }
 
     /**
-     * µÚÈı¸ö²ÎÊıÎªnullÄ¬ÈÏ¼ìÑéÊÇ·ñÎª¿ÕÎ»ÖÃ
+     * ç¬¬ä¸‰ä¸ªå‚æ•°ä¸ºnullé»˜è®¤æ£€éªŒæ˜¯å¦ä¸ºç©ºä½ç½®
      * 
      * @param cBoard
      * @param cPoint
@@ -119,7 +119,7 @@ public class GobangLogic {
     }
 
     /**
-     * ¼ì²âcPointµãÉÏÂä×Ó·½ÊÇ·ñÊÇcPlayerÖĞµÄÒ»¸ö
+     * æ£€æµ‹cPointç‚¹ä¸Šè½å­æ–¹æ˜¯å¦æ˜¯cPlayerä¸­çš„ä¸€ä¸ª
      * 
      * @param cBoard
      * @param cPoint
@@ -164,7 +164,7 @@ public class GobangLogic {
     }
 
     public static void main(String[] args) {
-	logger.error("¹ş¹ş");
+	logger.error("å“ˆå“ˆ");
 	ChessBoard cbBoard = new ChessBoard();
 	BestPoint bPoint = new BestPoint();
 	cbBoard.getForecastPointMsg().getBetterPoints().add(bPoint);

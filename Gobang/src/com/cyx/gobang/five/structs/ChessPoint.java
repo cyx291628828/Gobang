@@ -1,19 +1,19 @@
-package src.com.cyx.gobang.five.structs;
+ï»¿package com.cyx.gobang.five.structs;
 
 /**
  * 
- * @author ³ÂÓîĞù
- * @date 2017Äê11ÔÂ14
- * @function ÆåÅÌÉÏÃ¿¸öÒÑÂä×ÓµãµÄ×ø±ê
+ * @author é™ˆå®‡è½©
+ * @date 2017å¹´11æœˆ14
+ * @function æ£‹ç›˜ä¸Šæ¯ä¸ªå·²è½å­ç‚¹çš„åæ ‡
  *
  */
 public class ChessPoint implements Cloneable{
     /**
-     * @expression ¸ÃµãËùÔÚµÄXÖáµÄÎ»ÖÃ
+     * @expression è¯¥ç‚¹æ‰€åœ¨çš„Xè½´çš„ä½ç½®
      */
     private int point_x;
     /**
-     * @expression ¸ÃµãËùÔÚµÄYÖáµÄÎ»ÖÃ
+     * @expression è¯¥ç‚¹æ‰€åœ¨çš„Yè½´çš„ä½ç½®
      */
     private int point_y;
 

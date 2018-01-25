@@ -1,18 +1,18 @@
-﻿package src.com.cyx.gobang.five.enums;
+﻿package com.cyx.gobang.five.enums;
 
 public enum ChessPlayer {
     /**
-     * @expression ��
+     * @expression 空白
      */
-    BLANK(-1, "����"),
+    BLANK(-1, "空白"),
     /**
-     * @expression ����
+     * @expression 黑棋
      */
-    BLACK(1, "����"),
+    BLACK(1, "黑棋"),
     /**
-     * @expression ����
+     * @expression 白棋
      */
-    WHITE(2, "����"),;
+    WHITE(2, "白棋"),;
 
     private int mark;
     
