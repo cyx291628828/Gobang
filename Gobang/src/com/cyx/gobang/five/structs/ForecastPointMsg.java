@@ -1,11 +1,11 @@
-package src.com.cyx.gobang.five.structs;
+package com.cyx.gobang.five.structs;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import src.com.cyx.gobang.five.constant.GobangConstant;
-import src.com.cyx.gobang.five.enums.ChessPlayer;
+import com.cyx.gobang.five.constant.GobangConstant;
+import com.cyx.gobang.five.enums.ChessPlayer;
 
 public class ForecastPointMsg {
     /**

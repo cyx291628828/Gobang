@@ -40,14 +40,14 @@ public class GobangLogic {
      * 检验 落子 算分
      * 
      * @param cBoard
-     * @param cPoint
+     * @param dropPoint
      *            落子点
      * @param cPlayer
      *            落子方
      * @return
      */
-    public boolean dropChess(ChessBoard cBoard, ChessPoint cPoint, ChessPlayer cPlayer) {
-	if (!checkPointIsDrop(cBoard, cPoint, ChessPlayer.BLANK)) {
+    public boolean dropChess(ChessBoard cBoard, ChessPoint dropPoint, ChessPlayer cPlayer) {
+	if (!checkPointIsDrop(cBoard, dropPoint, ChessPlayer.BLANK)) {
 	    return false;
 	}
 	if (cBoard.getRecordList().size() == 0) {
@@ -61,32 +61,41 @@ public class GobangLogic {
 	    }
 	}
 	ForecastPointMsg forecastPointMsg = cBoard.getForecastPointMsg();
-	forecastPointMsg.addDropChess(cPoint, cPlayer);
+	forecastPointMsg.addDropChess(dropPoint, cPlayer);
 	// 计算分数
-	calculateScore(cBoard, cPoint);
-	cBoard.getRecordList().add(forecastPointMsg.getDropChessMsg(cPoint));
+	calculateScore(cBoard, dropPoint);
+	cBoard.getRecordList().add(forecastPointMsg.getDropChessMsg(dropPoint));
 	return true;
     }
-
-    private void calculateScore(ChessBoard cBoard, ChessPoint cPoint) {
+    /**
+     * 落子点dropPoint 落子之后其周围的子的分数变更
+     * @param cBoard
+     * @param dropPoint
+     */
+    private void calculateScore(ChessBoard cBoard, ChessPoint dropPoint) {
 	ChessPointScore blackScore ;
 	ChessPointScore whiteScore ;
-	ChessPoint temp = null;
+	ChessPoint check = null;
 	for (int i = -4; i < 5; i++) {
-	    temp = createNewCPoint(cPoint, 0, i);//从左到右
-	    if (checkChessPointIndex(cBoard, temp) && checkPointIsDrop(cBoard, temp)) {
-		getHorizontalScore(cBoard, temp, ChessPlayer.BLACK);
+	    check = createNewCPoint(dropPoint, 0, i);//从左到右
+	    if (checkChessPointIndex(cBoard, check) && checkPointIsDrop(cBoard, check)) {
+		getHorizontalScore(cBoard, check, dropPoint, ChessPlayer.BLACK);
 	    }
-	    temp = createNewCPoint(cPoint, i, 0);//从上到下
+	    check = createNewCPoint(dropPoint, i, 0);//从上到下
 	    
-	    temp = createNewCPoint(cPoint, i, i);//左上到右下
+	    check = createNewCPoint(dropPoint, i, i);//左上到右下
 	    
-	    temp = createNewCPoint(cPoint, i, -i);//右上到左下
+	    check = createNewCPoint(dropPoint, i, -i);//右上到左下
 	}
     }
 
-    private void getHorizontalScore(ChessBoard cBoard, ChessPoint temp, ChessPlayer black) {
-	// TODO Auto-generated method stubs
+    private void getHorizontalScore(ChessBoard cBoard, ChessPoint check, ChessPoint cPoint, ChessPlayer cPlayer) {
+	//检测 check 与 cPoint 点之间（不考虑此check、cPoint两点）有无除了空和cPlayer的其他子，有不计算，没有就计算
+	checkBetweenTwoPoints(cBoard, check, cPoint);
+	
+    }
+
+    private void checkBetweenTwoPoints(ChessBoard cBoard, ChessPoint check, ChessPoint cPoint, ChessPlayer... cPlayer) {
 	
     }
 

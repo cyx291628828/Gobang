@@ -1,4 +1,4 @@
-package src.com.cyx.gobang.five.enums;
+package com.cyx.gobang.five.enums;
 
 public enum ChessPlayer {
     /**

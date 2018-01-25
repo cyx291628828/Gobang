@@ -1,9 +1,9 @@
-package src.com.cyx.gobang.five.structs;
+package com.cyx.gobang.five.structs;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import src.com.cyx.gobang.five.enums.ChessPlayer;
+import com.cyx.gobang.five.enums.ChessPlayer;
 
 /**
  * 对于当前玩家来说最好的几个点

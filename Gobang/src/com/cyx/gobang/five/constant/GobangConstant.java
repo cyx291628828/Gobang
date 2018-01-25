@@ -1,4 +1,4 @@
-package src.com.cyx.gobang.five.constant;
+package com.cyx.gobang.five.constant;
 
 import java.util.HashMap;
 

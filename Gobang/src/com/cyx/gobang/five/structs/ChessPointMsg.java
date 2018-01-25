@@ -1,6 +1,6 @@
-package src.com.cyx.gobang.five.structs;
+package com.cyx.gobang.five.structs;
 
-import src.com.cyx.gobang.five.enums.ChessPlayer;
+import com.cyx.gobang.five.enums.ChessPlayer;
 
 /**
  * 
