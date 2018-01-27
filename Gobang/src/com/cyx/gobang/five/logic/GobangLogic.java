@@ -79,7 +79,7 @@ public class GobangLogic {
 	for (int i = -4; i < 5; i++) {
 	    check = createNewCPoint(dropPoint, 0, i);//从左到右
 	    if (checkChessPointIndex(cBoard, check) && checkPointIsDrop(cBoard, check)) {
-		getHorizontalScore(cBoard, check, dropPoint, ChessPlayer.BLACK);
+		getHorizontalScore(cBoard, check, ChessPlayer.BLACK);
 	    }
 	    check = createNewCPoint(dropPoint, i, 0);//从上到下
 	    
@@ -89,13 +89,7 @@ public class GobangLogic {
 	}
     }
 
-    private void getHorizontalScore(ChessBoard cBoard, ChessPoint check, ChessPoint cPoint, ChessPlayer cPlayer) {
-	//检测 check 与 cPoint 点之间（不考虑此check、cPoint两点）有无除了空和cPlayer的其他子，有不计算，没有就计算
-	checkBetweenTwoPoints(cBoard, check, cPoint);
-	
-    }
-
-    private void checkBetweenTwoPoints(ChessBoard cBoard, ChessPoint check, ChessPoint cPoint, ChessPlayer... cPlayer) {
+    private void getHorizontalScore(ChessBoard cBoard, ChessPoint check, ChessPlayer cPlayer) {
 	
     }
 
