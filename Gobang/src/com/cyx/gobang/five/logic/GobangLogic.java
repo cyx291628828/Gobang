@@ -1,12 +1,15 @@
 ﻿package com.cyx.gobang.five.logic;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
 import com.cyx.gobang.five.chessboard.ChessBoard;
+import com.cyx.gobang.five.constant.GobangConstant;
 import com.cyx.gobang.five.enums.ChessPlayer;
 import com.cyx.gobang.five.structs.BestPoint;
 import com.cyx.gobang.five.structs.ChessPoint;
@@ -65,6 +68,7 @@ public class GobangLogic {
 	// 计算分数
 	calculateScore(cBoard, dropPoint);
 	cBoard.getRecordList().add(forecastPointMsg.getDropChessMsg(dropPoint));
+	checkWin(cBoard, dropPoint);
 	return true;
     }
     /**
@@ -73,24 +77,194 @@ public class GobangLogic {
      * @param dropPoint
      */
     private void calculateScore(ChessBoard cBoard, ChessPoint dropPoint) {
-	ChessPointScore blackScore ;
-	ChessPointScore whiteScore ;
 	ChessPoint check = null;
 	for (int i = -4; i < 5; i++) {
 	    check = createNewCPoint(dropPoint, 0, i);//从左到右
 	    if (checkChessPointIndex(cBoard, check) && checkPointIsDrop(cBoard, check)) {
-		getHorizontalScore(cBoard, check, ChessPlayer.BLACK);
+		calculateHorizontalScore(cBoard, check);
 	    }
+	    
 	    check = createNewCPoint(dropPoint, i, 0);//从上到下
+	    if (checkChessPointIndex(cBoard, check) && checkPointIsDrop(cBoard, check)) {
+		calculateVerticalScore(cBoard, check);
+	    }
 	    
 	    check = createNewCPoint(dropPoint, i, i);//左上到右下
-	    
+	    if (checkChessPointIndex(cBoard, check) && checkPointIsDrop(cBoard, check)) {
+		calculateTopLeftScore(cBoard, check);
+	    }
 	    check = createNewCPoint(dropPoint, i, -i);//右上到左下
+	    if (checkChessPointIndex(cBoard, check) && checkPointIsDrop(cBoard, check)) {
+		calculateTopRightScore(cBoard, check);
+	    }
 	}
+	findBetterByScore(cBoard);
+    }
+    
+    private void checkWin(ChessBoard cBoard, ChessPoint dropPoint) {
+	int coun = 0;
+	ChessPoint check = null;
+    	for(int i = 4; i > -5 ; i--){
+    	    check = createNewCPoint(dropPoint, 0, i);//从左到右
+    		if(checkChessPointIndex(cBoard, check) && checkPointIsDrop(cBoard, check)){
+    			coun++;
+    			if(coun >= 5){
+    	    		mWinFlag = isDrop;
+    	    		return true;
+    	    	}
+    		}else{
+    			coun = 0;
+    		}
+    	}
     }
 
-    private void getHorizontalScore(ChessBoard cBoard, ChessPoint check, ChessPlayer cPlayer) {
+    /**
+     * 通过全盘的分数找到最高的12个点
+     * @return 
+     */
+    private List<BestPoint> findBetterByScore(ChessBoard cBoard){
+	ChessPointMsg[][] chessPointMsgs = cBoard.getForecastPointMsg().getChessPointMsgs();
+	List<BestPoint> betterPoints = cBoard.getForecastPointMsg().getBetterPoints();
+	betterPoints.clear();
+	for(int i = 0 ; i < chessPointMsgs.length ; i++){
+	    for(int j = 0 ; j < chessPointMsgs[i].length ; j++){
+		if(chessPointMsgs[i][j].getPlayer().compare(ChessPlayer.BLANK)){
+		    BestPoint bp = new BestPoint();
+		    bp.setPoint(chessPointMsgs[i][j].getPoint());
+		    bp.setBlackScoreAll(chessPointMsgs[i][j].getBlackScore().getScoreAll());
+		    bp.setWhiteScoreAll(chessPointMsgs[i][j].getWhiteScore().getScoreAll());
+		    betterPoints.add(bp);
+		}
+	    }
+	}
+	int maxSize = cBoard.getForecastPointMsg().getPointSize();
+	Collections.sort(betterPoints);
+	while(betterPoints.size() > maxSize){
+	    betterPoints.remove(betterPoints.size() - 1);
+	}
+	return betterPoints;
+    }
+    
+    private void calculateTopRightScore(ChessBoard cBoard, ChessPoint check) {
+	String blackTopRightString = getTopRightString(cBoard, check, ChessPlayer.BLACK);
+	int blackTopRightScore = getScoreByString(blackTopRightString);
+	String whiteTopRightString = getTopRightString(cBoard, check, ChessPlayer.WHITE);
+	int whiteTopRightScore = getScoreByString(whiteTopRightString);
+	ChessPointMsg chessPointMsg = cBoard.getForecastPointMsg().getDropChessMsg(check);
+	chessPointMsg.getBlackScore().setVerticalScore(blackTopRightScore);
+	chessPointMsg.getWhiteScore().setVerticalScore(whiteTopRightScore);
+    }
+
+    private String getTopRightString(ChessBoard cBoard, ChessPoint check, ChessPlayer cPlayer) {
+	ChessPoint check2 = null;
+	StringBuffer sb = new StringBuffer();
+	for (int i = -4; i < 5; i++) {
+	    check2 = createNewCPoint(check, i, -i);//右上到左下
+	    if(checkPointIsDrop(cBoard, check2)){
+		sb.append("0");
+	    }else if(checkPointIsDrop(cBoard, check2, cPlayer)){
+		sb.append("1");
+	    }else {
+		sb.append("2");
+	    }
+	}
+	sb.append("2").insert(0, "2");
+	return sb.toString();
+    }
+    
+    private void calculateTopLeftScore(ChessBoard cBoard, ChessPoint check) {
+	String blackTopLeftString = getTopLeftString(cBoard, check, ChessPlayer.BLACK);
+	int blackTopLeftScore = getScoreByString(blackTopLeftString);
+	String whiteTopLeftString = getVerticalString(cBoard, check, ChessPlayer.WHITE);
+	int whiteTopLeftScore = getScoreByString(whiteTopLeftString);
+	ChessPointMsg chessPointMsg = cBoard.getForecastPointMsg().getDropChessMsg(check);
+	chessPointMsg.getBlackScore().setVerticalScore(blackTopLeftScore);
+	chessPointMsg.getWhiteScore().setVerticalScore(whiteTopLeftScore);
+    }
+    
+    private String getTopLeftString(ChessBoard cBoard, ChessPoint check, ChessPlayer cPlayer) {
+	ChessPoint check2 = null;
+	StringBuffer sb = new StringBuffer();
+	for (int i = -4; i < 5; i++) {
+	    check2 = createNewCPoint(check, i, i);//左上到右下
+	    if(checkPointIsDrop(cBoard, check2)){
+		sb.append("0");
+	    }else if(checkPointIsDrop(cBoard, check2, cPlayer)){
+		sb.append("1");
+	    }else {
+		sb.append("2");
+	    }
+	}
+	sb.append("2").insert(0, "2");
+	return sb.toString();
+    }
+    
+    private void calculateVerticalScore(ChessBoard cBoard, ChessPoint check) {
+	String blackVerticalString = getVerticalString(cBoard, check, ChessPlayer.BLACK);
+	int blackVerticalScore = getScoreByString(blackVerticalString);
+	String whiteVerticalString = getVerticalString(cBoard, check, ChessPlayer.WHITE);
+	int whiteVerticalScore = getScoreByString(whiteVerticalString);
+	ChessPointMsg chessPointMsg = cBoard.getForecastPointMsg().getDropChessMsg(check);
+	chessPointMsg.getBlackScore().setVerticalScore(blackVerticalScore);
+	chessPointMsg.getWhiteScore().setVerticalScore(whiteVerticalScore);
+    }
 	
+
+    private String getVerticalString(ChessBoard cBoard, ChessPoint check, ChessPlayer cPlayer) {
+	ChessPoint check2 = null;
+	StringBuffer sb = new StringBuffer();
+	for (int i = -4; i < 5; i++) {
+	    check2 = createNewCPoint(check, i, 0);//从上到下
+	    if(checkPointIsDrop(cBoard, check2)){
+		sb.append("0");
+	    }else if(checkPointIsDrop(cBoard, check2, cPlayer)){
+		sb.append("1");
+	    }else {
+		sb.append("2");
+	    }
+	}
+	sb.append("2").insert(0, "2");
+	return sb.toString();
+    }
+
+    private void calculateHorizontalScore(ChessBoard cBoard, ChessPoint check) {
+	String blackHorizontalString = getHorizontalString(cBoard, check, ChessPlayer.BLACK);
+	int blackHorizontalScore = getScoreByString(blackHorizontalString);
+	String whiteHorizontalString = getHorizontalString(cBoard, check, ChessPlayer.WHITE);
+	int whiteHorizontalScore = getScoreByString(whiteHorizontalString);
+	ChessPointMsg chessPointMsg = cBoard.getForecastPointMsg().getDropChessMsg(check);
+	chessPointMsg.getBlackScore().setHorizontalScore(blackHorizontalScore);
+	chessPointMsg.getWhiteScore().setHorizontalScore(whiteHorizontalScore);
+    }
+
+    private String getHorizontalString(ChessBoard cBoard, ChessPoint check, ChessPlayer cPlayer) {
+	ChessPoint check2 = null;
+	StringBuffer sb = new StringBuffer();
+	for (int i = -4; i < 5; i++) {
+	    check2 = createNewCPoint(check, 0, i);//从左到右
+	    if(checkPointIsDrop(cBoard, check2)){
+		sb.append("0");
+	    }else if(checkPointIsDrop(cBoard, check2, cPlayer)){
+		sb.append("1");
+	    }else {
+		sb.append("2");
+	    }
+	}
+	sb.append("2").insert(0, "2");
+	return sb.toString();
+    }
+    
+    private int getScoreByString(String str) {
+	StringBuffer sb = new StringBuffer(str);
+	int length = sb.length();
+	int maxScore = 0;
+	for(int i = 0 ; i < length - 6 ; i++){
+	    String substring = sb.substring(i,i+6);
+	    if(GobangConstant.map.containsKey(substring)){
+		maxScore = Math.max(maxScore, GobangConstant.map.get(substring));
+	    }
+	}
+	return maxScore;
     }
 
     private ChessPoint createNewCPoint(ChessPoint cPoint, int apart_x, int apart_y) {
@@ -164,6 +338,8 @@ public class GobangLogic {
 	cbBoard.getForecastPointMsg().getBetterPoints().add(bPoint);
 	bPoint.setPoint(new ChessPoint(2, 3));
 	String jsonString = JSON.toJSONString(cbBoard.getForecastPointMsg().getBetterPoints());
-	System.err.println((new Date()).getTime());
+	StringBuffer sb = new StringBuffer("123456789");
+	String substring = sb.substring(0, 6);
+	System.out.println(substring);
     }
 }

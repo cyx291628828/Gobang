@@ -33,31 +33,47 @@ public class ChessPointScore {
         return zuoScore;
     }
     public void setZuoScore(int zuoScore) {
-        this.zuoScore = zuoScore;
+	if(this.zuoScore != zuoScore){
+	    this.zuoScore = zuoScore;
+	    calculateScoreAll();
+	}
     }
     public int getYouScore() {
         return youScore;
     }
     public void setYouScore(int youScore) {
-        this.youScore = youScore;
+	if(this.youScore != youScore){
+	    this.youScore = youScore;
+	    calculateScoreAll();
+	}
     }
     public int getVerticalScore() {
         return verticalScore;
     }
     public void setVerticalScore(int verticalScore) {
-        this.verticalScore = verticalScore;
+        if(this.verticalScore != verticalScore){
+            this.verticalScore = verticalScore;
+            calculateScoreAll();
+        }
     }
     public int getHorizontalScore() {
         return horizontalScore;
     }
     public void setHorizontalScore(int horizontalScore) {
-        this.horizontalScore = horizontalScore;
+        if(this.horizontalScore != horizontalScore){
+            this.horizontalScore = horizontalScore;
+            calculateScoreAll();
+        }
     }
     public int getScoreAll() {
         return scoreAll;
     }
     public void setScoreAll(int scoreAll) {
         this.scoreAll = scoreAll;
+    }
+    public void calculateScoreAll(){
+	int scoreAll = zuoScore + youScore + verticalScore + horizontalScore;
+	setScoreAll(scoreAll);
     }
     public void clear(){
 	setHorizontalScore(0);
