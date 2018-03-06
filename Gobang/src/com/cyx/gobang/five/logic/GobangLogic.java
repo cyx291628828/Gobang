@@ -1,20 +1,20 @@
 ﻿package com.cyx.gobang.five.logic;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
+import com.cyx.gobang.five.Utils.RandomUtils;
 import com.cyx.gobang.five.chessboard.ChessBoard;
 import com.cyx.gobang.five.constant.GobangConstant;
 import com.cyx.gobang.five.enums.ChessPlayer;
+import com.cyx.gobang.five.enums.GameState;
 import com.cyx.gobang.five.structs.BestPoint;
 import com.cyx.gobang.five.structs.ChessPoint;
 import com.cyx.gobang.five.structs.ChessPointMsg;
-import com.cyx.gobang.five.structs.ChessPointScore;
 import com.cyx.gobang.five.structs.ForecastPointMsg;
 
 public class GobangLogic {
@@ -68,7 +68,10 @@ public class GobangLogic {
 	// 计算分数
 	calculateScore(cBoard, dropPoint);
 	cBoard.getRecordList().add(forecastPointMsg.getDropChessMsg(dropPoint));
-	checkWin(cBoard, dropPoint);
+	ChessPlayer checkWin = checkWin(cBoard, dropPoint);
+	if(!checkWin.compare(ChessPlayer.BLANK)){
+	    System.out.println(checkWin.getDes()+"赢");
+	}
 	return true;
     }
     /**
@@ -101,21 +104,79 @@ public class GobangLogic {
 	findBetterByScore(cBoard);
     }
     
-    private void checkWin(ChessBoard cBoard, ChessPoint dropPoint) {
+    public ChessPlayer checkWin(ChessBoard cBoard, ChessPoint dropPoint) {
+	return checkWin(cBoard, dropPoint, cBoard.getPlayer());
+    }
+    public ChessPlayer checkWin(ChessBoard cBoard, ChessPoint dropPoint, ChessPlayer checkPlayer) {
+	if(checkPlayer.compare(ChessPlayer.BLANK)){
+	    return ChessPlayer.BLANK;
+	}
 	int coun = 0;
 	ChessPoint check = null;
-    	for(int i = 4; i > -5 ; i--){
-    	    check = createNewCPoint(dropPoint, 0, i);//从左到右
-    		if(checkChessPointIndex(cBoard, check) && checkPointIsDrop(cBoard, check)){
-    			coun++;
-    			if(coun >= 5){
-    	    		mWinFlag = isDrop;
-    	    		return true;
-    	    	}
-    		}else{
-    			coun = 0;
-    		}
-    	}
+	for (int i = -4; i < 5; i++) {
+	    check = createNewCPoint(dropPoint, 0, i);// 从左到右
+	    if (checkChessPointIndex(cBoard, check) && checkPointIsDrop(cBoard, check, checkPlayer)) {
+		coun++;
+		if (coun >= 5) {
+		    //改变游戏状态
+		    cBoard.upState(GameState.OVER);
+		    cBoard.getGobangGameOver().onGameWin(cBoard, checkPlayer);
+		    return checkPlayer;
+		}
+	    } else {
+		coun = 0;
+	    }
+	}
+	
+	coun = 0;
+	for (int i = -4; i < 5; i++) {
+	    check = createNewCPoint(dropPoint, i, 0);// 从上到下
+	    if (checkChessPointIndex(cBoard, check) && checkPointIsDrop(cBoard, check, checkPlayer)) {
+		coun++;
+		if (coun >= 5) {
+		    //改变游戏状态
+		    cBoard.upState(GameState.OVER);
+		    cBoard.getGobangGameOver().onGameWin(cBoard, checkPlayer);
+		    return checkPlayer;
+		}
+	    } else {
+		coun = 0;
+	    }
+	}
+	
+	coun = 0;
+	for (int i = -4; i < 5; i++) {
+	    check = createNewCPoint(dropPoint, i, i);// 左上到右下
+	    if (checkChessPointIndex(cBoard, check) && checkPointIsDrop(cBoard, check, checkPlayer)) {
+		coun++;
+		if (coun >= 5) {
+		    //改变游戏状态
+		    cBoard.upState(GameState.OVER);
+		    cBoard.getGobangGameOver().onGameWin(cBoard, checkPlayer);
+		    return checkPlayer;
+		}
+	    } else {
+		coun = 0;
+	    }
+	}
+	
+	coun = 0;
+	for (int i = -4; i < 5; i++) {
+	    check = createNewCPoint(dropPoint, i, -i);// 右上到左下
+	    if (checkChessPointIndex(cBoard, check) && checkPointIsDrop(cBoard, check, checkPlayer)) {
+		coun++;
+		if (coun >= 5) {
+		    //改变游戏状态
+		    cBoard.upState(GameState.OVER);
+		    cBoard.getGobangGameOver().onGameWin(cBoard, checkPlayer);
+		    return checkPlayer;
+		}
+	    } else {
+		coun = 0;
+	    }
+	}
+	
+	return ChessPlayer.BLANK;
     }
 
     /**
@@ -143,6 +204,15 @@ public class GobangLogic {
 	    betterPoints.remove(betterPoints.size() - 1);
 	}
 	return betterPoints;
+    }
+    
+    public BestPoint getBestPointByIQ(ChessBoard cBoard){
+	return getBestPointByIQ(cBoard, cBoard.getCOMPUTERIQ());
+    }
+    public BestPoint getBestPointByIQ(ChessBoard cBoard, int IQ){
+	List<BestPoint> findBetterByScore = findBetterByScore(cBoard);
+	BestPoint bestPoint = RandomUtils.choiceElement(findBetterByScore, GobangConstant.COMPUTER_MAX_IQ, IQ);
+	return bestPoint;
     }
     
     private void calculateTopRightScore(ChessBoard cBoard, ChessPoint check) {
@@ -328,18 +398,59 @@ public class GobangLogic {
     private String listToJson(ChessBoard cBoard) {
 	String jsonString = JSON.toJSONString(cBoard.getRecordList());
 	cBoard.getRecordList();
-	return "";
+	return jsonString;
     }
 
     public static void main(String[] args) {
 	logger.error("哈哈");
 	ChessBoard cbBoard = new ChessBoard();
 	BestPoint bPoint = new BestPoint();
-	cbBoard.getForecastPointMsg().getBetterPoints().add(bPoint);
-	bPoint.setPoint(new ChessPoint(2, 3));
-	String jsonString = JSON.toJSONString(cbBoard.getForecastPointMsg().getBetterPoints());
-	StringBuffer sb = new StringBuffer("123456789");
-	String substring = sb.substring(0, 6);
-	System.out.println(substring);
+	GobangLogic.getMe().dropChess(cbBoard, new ChessPoint(6, 7), ChessPlayer.BLACK);
+	List<BestPoint> findBetterByScore = GobangLogic.getMe().findBetterByScore(cbBoard);
+	for(BestPoint bp : findBetterByScore){
+	    System.out.println(bp);
+	}
+	System.out.println("--------");
+	while (!GameState.OVER.compare(cbBoard.getGameState())) {
+	    GobangLogic.getMe().dropChess(cbBoard, GobangLogic.getMe().getBestPointByIQ(cbBoard, 100).getPoint(), ChessPlayer.WHITE);
+	    for (BestPoint bp : findBetterByScore) {
+		System.out.println(bp);
+	    }
+	    System.out.println("--------");
+	    GobangLogic.getMe().dropChess(cbBoard, GobangLogic.getMe().getBestPointByIQ(cbBoard, 100).getPoint(), ChessPlayer.BLACK);
+	    for (BestPoint bp : findBetterByScore) {
+		System.out.println(bp);
+	    }
+	    System.out.println("--------");
+	}
+//	BestPoint bestPointByIQ = GobangLogic.getMe().getBestPointByIQ(cbBoard, 100);
+//	for(BestPoint bp : findBetterByScore){
+//	    System.out.println(bp);
+//	}
+//	System.out.println("--------");
+//	String listToJson = GobangLogic.getMe().listToJson(cbBoard);
+////	System.err.println(listToJson);
+//	GobangLogic.getMe().dropChess(cbBoard, bestPointByIQ.getPoint(), ChessPlayer.WHITE);
+//	findBetterByScore = GobangLogic.getMe().findBetterByScore(cbBoard);
+//	for(BestPoint bp : findBetterByScore){
+//	    System.out.println(bp);
+//	}
+//	System.out.println("--------");
+//	GobangLogic.getMe().dropChess(cbBoard, GobangLogic.getMe().getBestPointByIQ(cbBoard, 100).getPoint(), ChessPlayer.BLACK);
+//	for(BestPoint bp : findBetterByScore){
+//	    System.out.println(bp);
+//	}
+//	System.out.println("--------");
+//	GobangLogic.getMe().dropChess(cbBoard, GobangLogic.getMe().getBestPointByIQ(cbBoard, 100).getPoint(), ChessPlayer.WHITE);
+//	for(BestPoint bp : findBetterByScore){
+//	    System.out.println(bp);
+//	}
+//	System.out.println("--------");
+//	cbBoard.getForecastPointMsg().getBetterPoints().add(bPoint);
+//	bPoint.setPoint(new ChessPoint(2, 3));
+//	String jsonString = JSON.toJSONString(cbBoard.getForecastPointMsg().getBetterPoints());
+//	StringBuffer sb = new StringBuffer("123456789");
+//	String substring = sb.substring(0, 6);
+//	System.out.println(substring);
     }
 }

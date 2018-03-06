@@ -32,6 +32,10 @@ public class ChessBoard extends IGame {
      */
     private int CHESS_GRID = GobangConstant.CHESS_GRID;
     /**
+     * 电脑的智商系数0-100 电脑选择最高分点的概率，系数越大选最高点的概率越大
+     */
+    private int COMPUTERIQ = GobangConstant.CHESS_GRID;
+    /**
      * 当前下子玩家，默认黑棋先手
      */
     private ChessPlayer player = ChessPlayer.BLACK;
@@ -71,7 +75,7 @@ public class ChessBoard extends IGame {
     }
 
     // get 和 set 方法
-    private int getGameState() {
+    public int getGameState() {
 	return gameState.get();
     }
 
@@ -123,6 +127,14 @@ public class ChessBoard extends IGame {
 
     public void setRecordList(List<ChessPointMsg> recordList) {
 	this.recordList = recordList;
+    }
+
+    public int getCOMPUTERIQ() {
+        return COMPUTERIQ;
+    }
+
+    public void setCOMPUTERIQ(int cOMPUTERIQ) {
+        COMPUTERIQ = cOMPUTERIQ;
     }
 
     // -------分界线-------

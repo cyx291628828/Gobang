@@ -1,6 +1,8 @@
 ﻿package com.cyx.gobang.five.interfaces;
 
 import com.cyx.gobang.five.chessboard.ChessBoard;
+import com.cyx.gobang.five.enums.ChessPlayer;
+import com.cyx.gobang.five.enums.GameState;
 
 public class IGame{
 
@@ -39,14 +41,10 @@ public class IGame{
     private OnGobangGameOver gobangGameOver = new OnGobangGameOver() {
         
         @Override
-        public void onGameWin(ChessBoard cBoard) {
-    	
+        public void onGameWin(ChessBoard cBoard, ChessPlayer winPlayer) {
+            cBoard.upState(GameState.OVER);
         }
         
-        @Override
-        public void onGameLose(ChessBoard cBoard) {
-    	
-        }
     };
 
     public OnGobangGameBefore getGobangGameBefore() {

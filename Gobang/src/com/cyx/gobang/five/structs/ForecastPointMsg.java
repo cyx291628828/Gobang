@@ -29,7 +29,7 @@ public class ForecastPointMsg {
 	return chessCount;
     }
 
-    public void setChessCount(int chessCount) {
+    public void setChessCount(int chessCount) { 
 	this.chessCount = chessCount;
     }
 

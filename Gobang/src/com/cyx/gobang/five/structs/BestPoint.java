@@ -58,8 +58,9 @@ public class BestPoint implements Comparable<BestPoint>{
     
     @Override
     public String toString() {
-	System.out.println("tostring");
-        return super.toString();
+	StringBuffer sBuffer = new StringBuffer();
+	sBuffer.append("X:").append(point.getPoint_x()+",").append("Y:").append(point.getPoint_y()+",").append("score:").append(getMaxScore());
+        return sBuffer.toString();
     }
 
 }

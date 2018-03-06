@@ -17,6 +17,14 @@ public class GobangConstant {
      */
     public static boolean ATTACT_OR_DEFENSE = false;
     /**
+     * 电脑AI的默认智商
+     */
+    public static int COMPUTER_DEFAULT_IQ = 50;
+    /**
+     * 电脑AI的最大智商
+     */
+    public static int COMPUTER_MAX_IQ = 100;
+    /**
      * 分析长度
      */
     public static final int ANALYZE_LEN = 8;
