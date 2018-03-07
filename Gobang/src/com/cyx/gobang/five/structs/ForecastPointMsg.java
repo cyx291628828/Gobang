@@ -19,7 +19,7 @@ public class ForecastPointMsg {
     /**
      * 最好点的个数
      */
-    private int pointSize = 12;
+    private int pointSize = 16;
     /**
      * 下子的步数
      */

@@ -1,5 +1,6 @@
 ﻿package com.cyx.gobang.five.logic;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -180,7 +181,8 @@ public class GobangLogic {
     }
 
     /**
-     * 通过全盘的分数找到最高的12个点
+     * 通过全盘的分数找到最高的点集合
+     * 重新全盘计算 先清除再计算
      * @return 
      */
     private List<BestPoint> findBetterByScore(ChessBoard cBoard){
@@ -207,10 +209,31 @@ public class GobangLogic {
     }
     
     public BestPoint getBestPointByIQ(ChessBoard cBoard){
-	return getBestPointByIQ(cBoard, cBoard.getCOMPUTERIQ());
+	return getBestPointByIQ(cBoard, cBoard.getCOMPUTERIQ(), false);
+    }
+    public BestPoint getBestPointByIQ(ChessBoard cBoard, boolean calculate){
+	return getBestPointByIQ(cBoard, cBoard.getCOMPUTERIQ(), calculate);
     }
     public BestPoint getBestPointByIQ(ChessBoard cBoard, int IQ){
-	List<BestPoint> findBetterByScore = findBetterByScore(cBoard);
+	return getBestPointByIQ(cBoard, IQ, false);
+    }
+    
+    /**
+     * 从最好的点集合中根据IQ值找到一个最合适的点，IQ越高找到分值越高的概率就越大
+     * @param cBoard
+     * @param IQ
+     * IQ越高找到分值越高的概率就越大
+     * @param calculate
+     * 是否需要重新计算最好的点集合。 false前请保证List里面是最新的数据
+     * @return
+     */
+    public BestPoint getBestPointByIQ(ChessBoard cBoard, int IQ, boolean calculate){
+	List<BestPoint> findBetterByScore = new ArrayList<BestPoint>();
+	if(calculate){
+	    findBetterByScore = findBetterByScore(cBoard);
+	}else{
+	    findBetterByScore = cBoard.getForecastPointMsg().getBetterPoints();
+	}
 	BestPoint bestPoint = RandomUtils.choiceElement(findBetterByScore, GobangConstant.COMPUTER_MAX_IQ, IQ);
 	return bestPoint;
     }
@@ -411,6 +434,7 @@ public class GobangLogic {
 	    System.out.println(bp);
 	}
 	System.out.println("--------");
+	int num = 1;
 	while (!GameState.OVER.compare(cbBoard.getGameState())) {
 	    GobangLogic.getMe().dropChess(cbBoard, GobangLogic.getMe().getBestPointByIQ(cbBoard, 100).getPoint(), ChessPlayer.WHITE);
 	    for (BestPoint bp : findBetterByScore) {
@@ -422,7 +446,9 @@ public class GobangLogic {
 		System.out.println(bp);
 	    }
 	    System.out.println("--------");
+	    num +=2;
 	}
+	System.out.println(num);
 //	BestPoint bestPointByIQ = GobangLogic.getMe().getBestPointByIQ(cbBoard, 100);
 //	for(BestPoint bp : findBetterByScore){
 //	    System.out.println(bp);

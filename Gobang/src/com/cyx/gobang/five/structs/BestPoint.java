@@ -1,5 +1,7 @@
 ﻿package com.cyx.gobang.five.structs;
 
+import java.util.Random;
+
 public class BestPoint implements Comparable<BestPoint>{
     /**
      * @expression 该点所在的X轴Y轴的位置

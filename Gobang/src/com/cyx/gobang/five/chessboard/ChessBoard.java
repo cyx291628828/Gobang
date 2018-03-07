@@ -149,7 +149,7 @@ public class ChessBoard extends IGame {
      * 初始化棋盘信息 默认棋盘大小为15*15
      */
     private void init() {
-	forecastPointMsg.init(CHESS_SIZE, 12);
+	forecastPointMsg.init(CHESS_SIZE, 16);
 	recordList.clear();
 	forecastMap.clear();
 	forecastPoint.clear();
