@@ -88,26 +88,33 @@ public class RandomUtils {
 	if (collection == null || collection.isEmpty()) {
 	    return collection;
 	}
-	int index = 0;
+	int index_min = 0;
+	int index_max = 0;
 	List<BestPoint> tem = new ArrayList<BestPoint>();
 	tem.add(collection.get(0));
-	for (int i = 1; i < collection.size(); i++) {
-	    if (collection.get(i).getMaxScore() == collection.get(i - 1).getMaxScore()) {
-		index = i;
-		tem.add(e)
+	for (int i = 0; i < collection.size(); i++) {
+	    index_max = i;
+	    if(index_min >= index_max){
+		continue;
+	    }
+	    if (collection.get(index_min).getMaxScore() == collection.get(index_max).getMaxScore()) {
+		//随机交换
+		Random random = new Random();  
+		swap(collection,index_max,random.nextInt(index_max - index_min + 1) + index_min);
 	    } else {
-		
+		index_min = i;
 	    }
 	}
-	Iterator<BestPoint> item = collection.iterator();
-	BestPoint next = null;
-	while (item.hasNext()) {
-	    next = item.next();
-	    if (isGenerate(probability, gailv)) {
-		return next;
-	    }
-	}
-	return next;
-
+	return collection;
     }
+    
+    public static <T> List<T> swap(List<T> list,int i,int j){
+	if(i == j){
+	    return list;
+	}
+        final List<T> l=list;
+        l.set(i, l.set(j, l.get(i)));
+        return list;
+    }
+    
 }

@@ -205,6 +205,7 @@ public class GobangLogic {
 	while(betterPoints.size() > maxSize){
 	    betterPoints.remove(betterPoints.size() - 1);
 	}
+	RandomUtils.randomSameElement(betterPoints);
 	return betterPoints;
     }
     
