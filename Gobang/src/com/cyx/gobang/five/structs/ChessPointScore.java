@@ -65,6 +65,13 @@ public class ChessPointScore {
             calculateScoreAll();
         }
     }
+    public void setFourScore(int score) {
+	this.horizontalScore = score;
+	this.verticalScore = score;
+	this.youScore = score;
+	this.zuoScore = score;
+	calculateScoreAll();
+    }
     public int getScoreAll() {
         return scoreAll;
     }

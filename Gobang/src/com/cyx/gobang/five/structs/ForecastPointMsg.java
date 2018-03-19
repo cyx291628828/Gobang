@@ -62,6 +62,7 @@ public class ForecastPointMsg {
 	for (int i = 0; i < cHESS_SIZE; i++) {
 	    for (int j = 0; j < cHESS_SIZE; j++) {
 		chessPointMsgs[i][j] = new ChessPointMsg(new ChessPoint(i, j), ChessPlayer.BLANK);
+		chessPointMsgs[i][j].getBlackScore().setFourScore(30);
 	    }
 	}
 	setPointSize(pointSize);
