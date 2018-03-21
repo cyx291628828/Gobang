@@ -58,8 +58,13 @@ public class TestWin extends JFrame implements MouseListener {
 	}
 	
 	for(MPoint mPoint : points){
-	    g.setColor(Color.BLACK);
-	    g.fillOval(mPoint.getX()+60, mPoint.getY()+60, 10, 10);
+	    if(mPoint.getType().compare(ChessPlayer.BLACK)){
+		g.setColor(Color.BLACK);
+		g.fillOval((mPoint.getY() * jg) + stx - 10, (mPoint.getX() * jg)+sty - 10, 20, 20);
+	    }else{
+		g.setColor(Color.BLACK);
+		g.drawOval((mPoint.getY() * jg) + stx - 10, (mPoint.getX() * jg)+sty - 10, 20, 20);
+	    }
 	}
     }
 
@@ -75,9 +80,11 @@ public class TestWin extends JFrame implements MouseListener {
 	int y = ((arg0.getY() - sty) + jg / 2 ) / jg ;
 	ChessPoint chessPoint = new ChessPoint(y,x);
 	ChessPlayer player = cBoard.getPlayer();
-	GobangLogic.getMe().dropChess(cBoard, chessPoint, player);
-	MPoint mPoint = new MPoint(y,x,player);
-	points.add(mPoint);
+	if(GobangLogic.getMe().dropChess(cBoard, chessPoint, player)){
+	    MPoint mPoint = new MPoint(y,x,player);
+	    points.add(mPoint);
+	    repaint(arg0.getX()-25,arg0.getY()-25,50, 50);
+	}
     }
 
     @Override

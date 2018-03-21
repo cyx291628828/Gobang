@@ -1,5 +1,6 @@
 ﻿package com.cyx.gobang.five.logic;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -51,13 +52,18 @@ public class GobangLogic {
      * @return
      */
     public boolean dropChess(ChessBoard cBoard, ChessPoint dropPoint, ChessPlayer cPlayer) {
+	if(GameState.OVER.compare(cBoard.getGameState())){
+	    logger.error(MessageFormat.format("游戏结束，{0}已赢，无法继续！",cBoard.getPlayer().getDes()));
+	    return false;
+	}
 	if (!checkPointIsDrop(cBoard, dropPoint, ChessPlayer.BLANK)) {
+	    logger.error(MessageFormat.format("游戏结束，{0}已赢，无法继续！",cBoard.getPlayer().getDes()));
 	    return false;
 	}
 	if (cBoard.getRecordList().size() == 0) {
 	    cBoard.setPlayer(cPlayer);
 	} else {
-	    if (cBoard.getPlayer().compare(cPlayer)) {
+	    if (!cBoard.getPlayer().compare(cPlayer)) {
 		logger.error("下子错误:当前下子方与前一方相同");
 		return false;
 	    } else {
@@ -72,6 +78,16 @@ public class GobangLogic {
 	ChessPlayer checkWin = checkWin(cBoard, dropPoint);
 	if(!checkWin.compare(ChessPlayer.BLANK)){
 	    System.out.println(checkWin.getDes()+"赢");
+	    return true;
+	}
+	if(cBoard.getPlayer().compare(ChessPlayer.BLACK)){
+	    cBoard.setPlayer(ChessPlayer.WHITE);
+	}else if(cBoard.getPlayer().compare(ChessPlayer.WHITE)){
+	    cBoard.setPlayer(ChessPlayer.BLACK);
+	}
+	List<BestPoint> findBetterByScore = findBetterByScore(cBoard);
+	for(BestPoint bp : findBetterByScore){
+	    System.out.println(bp);
 	}
 	return true;
     }
