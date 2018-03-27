@@ -1,8 +1,8 @@
 ﻿package com.cyx.gobang.five.structs;
 
-import java.util.Random;
+import com.cyx.gobang.five.enums.ChessPlayer;
 
-public class BestPoint implements Comparable<BestPoint>{
+public class BestPoint implements Comparable<BestPoint>, Cloneable{
     /**
      * @expression 该点所在的X轴Y轴的位置
      */
@@ -43,12 +43,22 @@ public class BestPoint implements Comparable<BestPoint>{
     public int getMaxScore(){
 	return whiteScoreAll > blackScoreAll ? whiteScoreAll : blackScoreAll;
     }
+    
+    public ChessPlayer getBestChess(){
+	return whiteScoreAll > blackScoreAll ? ChessPlayer.WHITE : ChessPlayer.BLACK;
+    }
+    
+    public int getAllScore(){
+	return whiteScoreAll + blackScoreAll;
+    }
+    
 
     /**
      * 待添加
      */
     @Override
     public int compareTo(BestPoint bestPoint) {
+	
 	if (bestPoint.getMaxScore() > this.getMaxScore()) {
 	    return 1;
 	} else if (bestPoint.getMaxScore() < this.getMaxScore()) {

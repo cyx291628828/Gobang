@@ -7,7 +7,7 @@
  * @function 棋盘上每个可落子点的各个方向的分数
  *
  */
-public class ChessPointScore {
+public class ChessPointScore implements Cloneable{
     /**
      * @expression 左上到右下的成绩
      */

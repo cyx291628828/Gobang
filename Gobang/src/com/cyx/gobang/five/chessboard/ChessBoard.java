@@ -12,6 +12,7 @@ import com.cyx.gobang.five.constant.GobangConstant;
 import com.cyx.gobang.five.enums.ChessPlayer;
 import com.cyx.gobang.five.enums.GameState;
 import com.cyx.gobang.five.interfaces.IGame;
+import com.cyx.gobang.five.structs.ChessBoardNode;
 import com.cyx.gobang.five.structs.ChessPointMsg;
 import com.cyx.gobang.five.structs.ForecastPointMsg;
 
@@ -22,7 +23,7 @@ import com.cyx.gobang.five.structs.ForecastPointMsg;
  * @function 棋盘上的逻辑主要功能
  *
  */
-public class ChessBoard extends IGame {
+public class ChessBoard extends IGame implements Cloneable{
     /**
      * 默认棋盘大小为GobangConstant.CHESS_SIZE = 15
      */
@@ -59,6 +60,11 @@ public class ChessBoard extends IGame {
      * 保存已经下子的记录
      */
     private List<ChessPointMsg> recordList = new ArrayList<ChessPointMsg>();
+    
+    /**
+     * 保存落子记录树
+     */
+    private ChessBoardNode cBNode = null;
 
     // 构造方法
     /**
@@ -95,6 +101,14 @@ public class ChessBoard extends IGame {
 
     public void setPlayer(ChessPlayer player) {
 	this.player = player;
+    }
+
+    public ChessBoardNode getcBNode() {
+        return cBNode;
+    }
+
+    public void setcBNode(ChessBoardNode cBNode) {
+        this.cBNode = cBNode;
     }
 
     public ForecastPointMsg getForecastPointMsg() {

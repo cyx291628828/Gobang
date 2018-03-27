@@ -7,7 +7,7 @@ import java.util.List;
 import com.cyx.gobang.five.constant.GobangConstant;
 import com.cyx.gobang.five.enums.ChessPlayer;
 
-public class ForecastPointMsg {
+public class ForecastPointMsg implements Cloneable{
     /**
      * 目前整个棋盘的所有点状态
      */
@@ -82,5 +82,9 @@ public class ForecastPointMsg {
 	ChessPointMsg chessPointMsg = chessPointMsgs[cPoint.getPoint_x()][cPoint.getPoint_y()];
 	return chessPointMsg;
     }
-
+    
+    @Override
+    protected ForecastPointMsg clone() throws CloneNotSupportedException {
+        return (ForecastPointMsg) super.clone();
+    }
 }

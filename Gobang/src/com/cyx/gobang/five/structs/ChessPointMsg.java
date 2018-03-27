@@ -9,7 +9,7 @@ import com.cyx.gobang.five.enums.ChessPlayer;
  * @function 棋盘上每个已落子点的信息
  *
  */
-public class ChessPointMsg {
+public class ChessPointMsg implements Cloneable{
     /**
      * @expression 该点所在的X轴Y轴的位置
      */
@@ -91,5 +91,10 @@ public class ChessPointMsg {
     public void clearAllScore(){
 	blackScore.clear();
 	whiteScore.clear();
+    }
+    
+    @Override
+    protected ChessPointMsg clone() throws CloneNotSupportedException {
+        return (ChessPointMsg) super.clone();
     }
 }
