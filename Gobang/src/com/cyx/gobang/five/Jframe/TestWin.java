@@ -1,13 +1,16 @@
 package com.cyx.gobang.five.Jframe;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -15,8 +18,10 @@ import com.cyx.gobang.five.chessboard.ChessBoard;
 import com.cyx.gobang.five.enums.ChessPlayer;
 import com.cyx.gobang.five.logic.GobangLogic;
 import com.cyx.gobang.five.structs.ChessPoint;
+import com.cyx.gobang.five.structs.ChessPointMsg;
+import com.cyx.gobang.five.structs.ForecastPointMsg;
 
-public class TestWin extends JFrame implements MouseListener {
+public class TestWin extends JFrame implements MouseListener, ActionListener{
 
     ChessBoard cBoard = null;
     int stx = 28, sty = 51, endx = 770, endy = 770;
@@ -29,11 +34,36 @@ public class TestWin extends JFrame implements MouseListener {
 	this.setTitle(title);// 窗口标题
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// 关闭的操作
 	this.setLocation(100, 200);// 窗口位置
-	this.setSize(830, 850);// 窗口大小
+	this.setSize(830, 900);// 窗口大小
 	this.setVisible(true);// 窗口可见
-
+	
+	this.setLayout(null);
+	JButton jButton = new JButton("悔棋");
+	jButton.setBounds(100, 800, 150, 50);
+	Container container=this.getContentPane();//创建容器对象
+	container.add(jButton);
+	
+	JPanel dPanel = new JPanel();
+	dPanel.setBounds(0, 0, 830, 850);
+	this.add(dPanel);
+	
+	jButton.addActionListener(new ActionListener() {
+	    
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		MPoint mPoint = points.get(points.size() - 1);
+		points.remove(mPoint);
+		
+		ChessPointMsg record = cBoard.getcBNode().getTopNode().getRecord();
+		ForecastPointMsg getfPointMsg = cBoard.getcBNode().getTopNode().getfPointMsg();
+		cBoard.setForecastPointMsg(getfPointMsg);
+		
+		ChessPointMsg chessPointMsg = cBoard.getRecordList().get(cBoard.getRecordList().size() - 1);
+		cBoard.getRecordList().remove(chessPointMsg);
+	    }
+	});
+	
     }
-    
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -42,9 +72,6 @@ public class TestWin extends JFrame implements MouseListener {
 	int jg = 50;
 	// 绘制外层矩形框
 	g.drawRect(stx, sty, endx - stx, endy - sty);
-	/*
-	 * 绘制水平10个，垂直10个方格。 即水平方向9条线，垂直方向9条线， 外围四周4条线已经画过了，不需要再画。 同时内部64个方格填写数字。
-	 */
 	for (int i = 0; i < 15; i++) {
 	    // 绘制第i条水平线
 	    g.drawLine(stx, sty + (i * jg), endx, sty + (i * jg));
@@ -67,11 +94,11 @@ public class TestWin extends JFrame implements MouseListener {
 	    }
 	}
     }
-
     public static void main(String args[]) {// 在主方法中调用createJFrame()方法
 	TestWin testWin = new TestWin("创建一个JFrame窗体");
 	testWin.cBoard = new ChessBoard();
 	testWin.addMouseListener(testWin);
+	
     }
 
     @Override
@@ -90,6 +117,7 @@ public class TestWin extends JFrame implements MouseListener {
     @Override
     public void mouseEntered(MouseEvent arg0) {
 	System.out.println("dd");
+	System.out.println(arg0.getX()+"--"+arg0.getY());
 
     }
 
@@ -108,7 +136,14 @@ public class TestWin extends JFrame implements MouseListener {
     @Override
     public void mouseReleased(MouseEvent arg0) {
 	// TODO Auto-generated method stub
+	System.out.println(arg0.getX()+"--"+arg0.getY());
+    }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+	if(e.getID() == 123){
+	    
+	}
     }
 
 }

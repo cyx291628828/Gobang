@@ -15,6 +15,7 @@ import com.cyx.gobang.five.constant.GobangConstant;
 import com.cyx.gobang.five.enums.ChessPlayer;
 import com.cyx.gobang.five.enums.GameState;
 import com.cyx.gobang.five.structs.BestPoint;
+import com.cyx.gobang.five.structs.ChessBoardNode;
 import com.cyx.gobang.five.structs.ChessPoint;
 import com.cyx.gobang.five.structs.ChessPointMsg;
 import com.cyx.gobang.five.structs.ForecastPointMsg;
@@ -75,6 +76,16 @@ public class GobangLogic {
 	// 计算分数
 	calculateScore(cBoard, dropPoint);
 	cBoard.getRecordList().add(forecastPointMsg.getDropChessMsg(dropPoint));
+	//落子情况存进树结构
+	ChessBoardNode newcBNode = new ChessBoardNode(forecastPointMsg.getDropChessMsg(dropPoint), forecastPointMsg);
+	ChessBoardNode cBNode = cBoard.getcBNode();
+	if(cBNode == null || cBNode.getfPointMsg() == null || cBNode.getRecord() == null){
+	    cBoard.setcBNode(newcBNode);
+	}else{
+	    newcBNode.setTopNode(cBNode);
+	    cBNode.setLeftNode(newcBNode);
+	    cBoard.setcBNode(newcBNode);
+	}
 	ChessPlayer checkWin = checkWin(cBoard, dropPoint);
 	if(!checkWin.compare(ChessPlayer.BLANK)){
 	    System.out.println(checkWin.getDes()+"赢");

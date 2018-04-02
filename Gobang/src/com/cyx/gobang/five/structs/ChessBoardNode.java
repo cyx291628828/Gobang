@@ -23,6 +23,10 @@ public class ChessBoardNode {
 	    e.printStackTrace();
 	}
     }
+    
+    public ChessBoardNode(){
+	
+    }
 
     public ChessPointMsg getRecord() {
         return record;
